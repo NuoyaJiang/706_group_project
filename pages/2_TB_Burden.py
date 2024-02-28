@@ -1,3 +1,4 @@
+from vega_datasets import data
 import streamlit as st
 import time
 import numpy as np
@@ -35,10 +36,8 @@ subset = subset[subset["country"].isin(countries_options)]
 
 
 #3. wolrd maps
-#from vega_datasets import data
-#source = alt.topo_feature(data.world_110m.url, 'countries')
-from altair.expr import topojson_feature
-source = alt.topo_feature('https://vega.github.io/vega-datasets/data/world-110m.json', 'countries')
+source = alt.topo_feature(data.world_110m.url, 'countries')
+
 
 
 df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
