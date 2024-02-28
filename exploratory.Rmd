@@ -1,0 +1,35 @@
+---
+title: "exploratory"
+output: html_document
+date: '2024-02-21'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+expenditure = read.csv("TB_expenditure_utilisation_2024-02-21.csv")
+
+subset = expenditure[,c("exp_cpp_dstb", "exp_cpp_mdr", "exp_fld", "exp_sld",
+                        "exp_lab", "exp_mdrmgt","exp_orsrvy","exp_oth",
+                        "exp_patsup","exp_prog","exp_staff")]
+
+subset = subset%>%
+  drop_na()
+
+subset = data.frame(apply(subset+1, 2, log10))
+```
+
+
+```{r}
+pdf("cor.pdf", 10, 10)
+plot(subset)
+```
+
+
+
+
+
+
