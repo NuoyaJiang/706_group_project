@@ -8,15 +8,6 @@ st.set_page_config(
 )
 
 
-# page_names_to_funcs = {
-#     "—": intro,
-#     "Plotting Demo": Plotting_Demo,
-# }
-
-# demo_name = st.sidebar.selectbox("Choose a demo", page_names_to_funcs.keys())
-# page_names_to_funcs[demo_name]()
-
-
 st.write("# Welcome to Streamlit! 👋")
 
 st.sidebar.success("Select a demo above.")
