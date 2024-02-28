@@ -6,7 +6,7 @@ import pickle
 
 @st.cache
 def load_data():
-    df = pd.read_pickle("mtb_cleaned_data.pkl")
+    df = pd.read_pickle("data/mtb_cleaned_data.pkl")
 
 df = load_data()
 
