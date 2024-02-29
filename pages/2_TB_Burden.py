@@ -1,4 +1,4 @@
-from vega_datasets import data
+#from vega_datasets import data
 import streamlit as st
 import time
 import numpy as np
@@ -36,9 +36,8 @@ subset = subset[subset["country"].isin(countries_options)]
 
 
 #3. wolrd maps
-source = alt.topo_feature(data.world_110m.url, 'countries')
-
-
+#source = alt.topo_feature(data.world_110m.url, 'countries')
+world = alt.topo_feature('world_110m')
 
 df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
 df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index()
