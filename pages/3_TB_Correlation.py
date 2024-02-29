@@ -7,7 +7,7 @@ st.set_page_config(
     page_icon="👋",
 )
 
-# st.sidebar.success("Select a demo above.")
+st.write("# TB Correlation")
 
 st.markdown(
     """
@@ -16,7 +16,7 @@ st.markdown(
     **👈 Select a demo from the sidebar** to see some examples
     of what Streamlit can do!
     ### Want to learn more?
-    - Check out [streamlit.iopagetbelowstreamlit.io)
+    - Check out [streamlit.iopagetbelowstreamlit.io]
     - Jump into our [documentation](https://docs.streamlit.io)
     - Ask a question in our [community
         forums](https://discuss.streamlit.io)
