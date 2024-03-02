@@ -108,7 +108,7 @@ chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
 )
 
 #chart_all = alt.hconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
-#st.altair_chart(chart_all, use_container_width=True)
+st.altair_chart(chart_trend_rate, use_container_width=True)
 
 
 
