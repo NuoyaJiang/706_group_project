@@ -90,9 +90,11 @@ chart_resistance = chart_base.mark_geoshape().encode(
 
 
 chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
-st.altair_chart(chart_resistance, use_container_width=True)
+#st.altair_chart(chart_resistance, use_container_width=True)
 
-
+df2 = df[df["country"].isin(countries_options)][["country", "year","e_rr_pct_ret", "country-code"]]
+df2.columns = ["country", "year","drug-resistance-percentage", "country-code"]
+st.write(df2)
 
 chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
     x=alt.X('year:T'),
@@ -107,8 +109,8 @@ chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
     height=height
 )
 
-#chart_all = alt.hconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
-st.altair_chart(chart_trend_rate, use_container_width=True)
+chart_all = alt.hconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
+st.altair_chart(chart_all, use_container_width=True)
 
 
 
