@@ -9,10 +9,11 @@ from vega_datasets import data
 @st.cache
 def load_data():
     df = pd.read_pickle("data/mtb_cleaned_data.pkl")
-    return df
+    country_df = pd.read_csv('https://raw.githubusercontent.com/hms-dbmi/bmi706-2022/main/cancer_data/country_codes.csv', dtype = {'conuntry-code': str})
+    return df, country_df
 
-df = load_data()
-
+df, country_df = load_data()
+df = df.merge(country_df[['country', 'country-code']], on='country')
 
 #1. slider to choose year
 st.write("## Visualize the temporal trend of TB burden across different countries")
@@ -42,6 +43,8 @@ source = alt.topo_feature(data.world_110m.url, 'countries')
 
 df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
 df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index()
+df3 = df1.merge(df2, on = 'country')
+
 width = 600
 height  = 300
 project = 'equirectangular'
@@ -69,11 +72,11 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df1, "country", ['c_new_tsr']),
+        from_=alt.LookupData(df3, "country_code", ['country','c_new_tsr', 'e_inc_num']),
 )
 
 # fix the color schema so that it will not change upon user selection
-rate_scale = alt.Scale(domain=[df1['c_new_tsr'].min(), df1['c_new_tsr'].max()], scheme='oranges')
+rate_scale = alt.Scale(domain=[df3['c_new_tsr'].min(), df3['c_new_tsr'].max()], scheme='oranges')
 rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
@@ -86,7 +89,7 @@ chart_treatmentrate = chart_base.mark_geoshape().encode(
 )
 
 # fix the color schema so that it will not change upon user selection
-population_scale = alt.Scale(domain=[df2['e_inc_num'].min(), df2['e_inc_num'].max()], scheme='yellowgreenblue')
+population_scale = alt.Scale(domain=[df3['e_inc_num'].min(), df3['e_inc_num'].max()], scheme='yellowgreenblue')
 chart_incidence = chart_base.mark_geoshape().encode(
       color='e_inc_num:Q',
       tooltip=['country:N', 'e_inc_num:Q']
