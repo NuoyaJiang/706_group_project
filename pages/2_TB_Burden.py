@@ -113,9 +113,7 @@ chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_in
 
 
 #4. individual smaller plots
-brush = alt.selection_interval(encodings=['x'])
-
-chart_trend = alt.Chart(subset).mark_line().encode(
+chart_trend = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:T'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
     color=alt.Color('country:N'),
@@ -124,9 +122,6 @@ chart_trend = alt.Chart(subset).mark_line().encode(
     title=f'Yearly Trend of TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=600,
     height=300
-)
-chart_trend = chart_trend.encode(
-    alt.X('year:T', scale=alt.Scale(domain=brush))
 )
 
 chart_all = chart_maps & chart_trend
