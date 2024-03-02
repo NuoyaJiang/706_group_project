@@ -16,20 +16,21 @@ st.write("# TB Correlation")
 
 data = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
 subset = data[["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist', 
-               "exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth", 
-               "exp_patsup", "exp_staff"]]
+               "exp_cpp_dstb", "exp_cpp_mdr", "exp_lab","exp_orsrvy","exp_oth", 
+               "exp_patsup", "exp_staff", 'exp_tpt']]
 
 subset.columns = ['Percent of New Resistant Cases', 
                   'Percent of Treated Resistant Cases', 
                   'All New Case Treatment Success Rate', 
                   'Resistant Case Treatment Success Rate', 
-                  'Expenditure for Drug-susceptible TB', 
-                  'Expenditure for Drug-resistant TB', 
+                  'Average Cost of First-line Treatment', 
+                  'Average Cost of Second-line Treatment'
                   'Expenditure on Laboratory Infrastructure', 
                   'Expenditure on Operational Research', 
                   'Expenditure on All Other Budget Line Items',
                   'Expenditure on Patient Support', 
-                  'Expenditure on National TB Programme staff ']
+                  'Expenditure on National TB Programme staff', 
+                  'Expenditure for TB Prevention']
 
 
 corr_mat = subset.apply(np.sqrt).corr().iloc[6:,0:6]
