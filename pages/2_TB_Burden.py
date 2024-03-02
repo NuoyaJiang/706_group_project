@@ -69,16 +69,16 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df1, "country-code", ['c_new_str']),
+        from_=alt.LookupData(df1, "country-code", ['c_new_tsr']),
 )
 
 # fix the color schema so that it will not change upon user selection
-rate_scale = alt.Scale(domain=[df1['c_new_str'].min(), df1['c_new_str'].max()], scheme='oranges')
-rate_color = alt.Color(field="c_new_str", type="quantitative", scale=rate_scale)
+rate_scale = alt.Scale(domain=[df1['c_new_tsr'].min(), df1['c_new_tsr'].max()], scheme='oranges')
+rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
-      color=alt.Color('c_new_str:Q', scale=alt.Scale(scheme='oranges')),
-      tooltip=['country:N', 'c_new_str:Q']
+      color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges')),
+      tooltip=['country:N', 'c_new_tsr:Q']
     ).transform_filter(
     selector
     ).properties(
