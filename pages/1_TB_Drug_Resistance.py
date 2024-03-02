@@ -91,7 +91,6 @@ chart_resistance = chart_base.mark_geoshape().encode(
 
 chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
 
-st.altair_chart(chart_resistance, use_container_width=True)
 
 st.write(df1)
 
@@ -107,7 +106,10 @@ chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
     width=width,
     height=height
 )
-st.altair_chart(chart_trend_rate, use_container_width=True)
+
+chart_all = alt.hconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
+st.altair_chart(chart_all, use_container_width=True)
+
 
 
 countries_in_subset = df1["country"].unique()
