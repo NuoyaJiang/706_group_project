@@ -115,7 +115,7 @@ chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_in
 #4. individual smaller plots
 chart_trend = alt.Chart(subset).mark_line().encode(
     x='year:T',
-    y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate', scale=alt.Scale(type='log', domain=['min', 'max'])),
+    y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, subset['c_new_tsr'].max()+10])),
     color=alt.Color('country:N'),
     tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate")]
 ).properties(
