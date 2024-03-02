@@ -98,17 +98,17 @@ chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
     x=alt.X('year:T'),
     y=alt.Y("drug-resistance-percentage:Q", title= 'TB drug resistance percentage (%)', scale=alt.Scale(type='log', domain=[df1['drug-resistance-percentage'].min()-5, 100])),
     color=alt.Color('country:N'),
-    tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="TB Treatment Success Rate (%)")]
+    tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="Drug resistance percentage (%)")]
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of TB Treatment Success Rate Worldwide in {year}',
+    title=f'Yearly Trend of Drug resistance percentage Worldwide in {year}',
     width=width,
     height=height
 )
-
-chart_all = alt.hconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
-st.altair_chart(chart_all, use_container_width=True)
+st.altair_chart(chart_resistance, use_container_width=True)
+#chart_all = alt.hconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
+#st.altair_chart(chart_all, use_container_width=True)
 
 
 
