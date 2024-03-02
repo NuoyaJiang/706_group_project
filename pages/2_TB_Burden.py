@@ -118,6 +118,8 @@ chart_trend = alt.Chart(subset).mark_line(point=True).encode(
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
     color=alt.Color('country:N'),
     tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate")]
+).transform_filter(
+    selector
 ).properties(
     title=f'Yearly Trend of TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=600,
