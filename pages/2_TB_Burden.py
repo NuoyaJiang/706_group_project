@@ -145,7 +145,7 @@ chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(col
 chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
 chart_all = alt.vconcat(chart_top, chart_bottom).resolve_scale(color='independent')
 
-st.altair_chart(chart_all, use_container_width=True)
+st.altair_chart(chart_top, use_container_width=True)
 
 
 countries_in_subset = df3["country"].unique()
