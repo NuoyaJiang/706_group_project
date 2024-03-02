@@ -104,12 +104,29 @@ chart_incidence = chart_base.mark_geoshape().encode(
     title=f'Average Estimated number of incident cases (all forms) Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
-chart2 = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
+chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
 ).resolve_scale(
     color='independent'
 )
 
-st.altair_chart(chart2, use_container_width=True)
+
+
+#4. individual smaller plots
+for selected_country in countries_options:
+    country_data = df3[df3['country'] == selected_country]
+
+    chart_trend = alt.Chart(country_data).mark_line().encode(
+        x='year:T',
+        y="c_new_tsr:Q",
+        tooltip=['year:T', "c_new_tsr:Q"]
+    ).properties(
+        title=f'TB Treatment Success Rate Trend in {selected_country}',
+        width=600,
+        height=300
+    )
+
+chart_all = chart_maps & chart_trend
+st.altair_chart(chart_all, use_container_width=True)
 
 
 countries_in_subset = df3["country"].unique()
