@@ -11,7 +11,7 @@ st.write(
     """This page illustrates TB Worldwide Drug Resistance from 2018 to 2021"""
 )
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def load_data():
     df = pd.read_pickle("data/mtb_cleaned_data.pkl")
     country_df = pd.read_csv('https://raw.githubusercontent.com/hms-dbmi/bmi706-2022/main/cancer_data/country_codes.csv', dtype = {'conuntry-code': str})
@@ -40,7 +40,7 @@ df1 = df1[df1["country"].isin(countries_options)]
 df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
 df1 = df1.merge(country_df[['country', 'country-code']], on='country')
 df1.columns = ["country", "drug-resistance-percentage", "country-code"]
-
+st.write(df1)
 #df2 = df1.groupby(['country'])['e_rr_pct_new'].mean().reset_index()
 #df3 = df1.merge(df2, on = 'country')
 
@@ -90,9 +90,9 @@ chart_resistance = chart_base.mark_geoshape().encode(
 
 
 chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
+st.altair_chart(chart_resistance, use_container_width=True)
 
 
-st.write(df1)
 
 chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
     x=alt.X('year:T'),
@@ -106,9 +106,9 @@ chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
     width=width,
     height=height
 )
-st.altair_chart(chart_resistance, use_container_width=True)
+
 #chart_all = alt.hconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
-#st.altair_chart(chart_all, use_container_width=True)
+st.altair_chart(chart_trend_rate, use_container_width=True)
 
 
 
