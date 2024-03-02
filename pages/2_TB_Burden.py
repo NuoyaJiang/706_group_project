@@ -143,9 +143,9 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
 chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
 chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
-chart_all = alt.vconcat(chart_top, chart_bottom).resolve_scale(color='independent')
+chart_all = chart_top & chart_bottom
 
-st.altair_chart(chart_top, use_container_width=True)
+st.altair_chart(chart_all, use_container_width=True)
 
 
 countries_in_subset = df3["country"].unique()
