@@ -60,6 +60,8 @@ x_var = np.array(["exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth",
 y_var = np.array(["e_rr_pct_new", "e_rr_pct_ret", 
                   'c_new_tsr', 'c_tsr_resist'])[np.where(columns == y_option)]
 
+st.write(str(x_var))
+
 scatterplot = alt.Chart(data).mark_point().encode(
     y=alt.Y(y_var, title=y_option),
     x=alt.X(x_var, title=x_option),
