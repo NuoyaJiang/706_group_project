@@ -51,8 +51,8 @@ df3 = df3.merge(country_df[['country', 'country-code']], on='country')
 #df3 = df3[~((df3['c_new_tsr'].isna())|(df3['e_inc_num'].isna()))]
 
 
-width = 500
-height  = 250
+width = 450
+height  = 225
 project = 'equirectangular'
 
     # a gray map using as the visualization background
