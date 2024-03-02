@@ -34,7 +34,7 @@ countries_options = st.multiselect(
 
 df1 = df[df['year']==year]
 df1 = df1[df1["country"].isin(countries_options)]
-
+df1 = df1.merge(country_df[['country', 'country-code']], on='country')
 
 
 df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
