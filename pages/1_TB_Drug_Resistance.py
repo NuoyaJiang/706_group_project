@@ -96,7 +96,7 @@ df2 = df[df["country"].isin(countries_options)][["country", "year","e_rr_pct_ret
 df2.columns = ["country", "year","drug-resistance-percentage", "country-code"]
 st.write(df2)
 
-chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
+chart_trend_rate = alt.Chart(df2).mark_line(point=True).encode(
     x=alt.X('year:T'),
     y=alt.Y("drug-resistance-percentage:Q", title= 'TB drug resistance percentage (%)', scale=alt.Scale(type='log', domain=[df1['drug-resistance-percentage'].min()-5, 100])),
     color=alt.Color('country:N'),
