@@ -8,6 +8,7 @@ st.set_page_config(
 )
 
 home_url = "https://706groupprojectlmn.streamlit.app"
+target = "_self"
 
 st.write("# Welcome to Group NLM!")
 
@@ -19,4 +20,4 @@ st.markdown(
 """
 )
 
-st.markdown(f"In this project, we visualize <a href={home_url+'/TB_Drug_Resistance'} target='_self'>its rising trend in drug resistance</a>, [the burden caused by drug resistance]({home_url}/TB_Burden), and [socioeconomic factors that may help us hamper the trend]({home_url}/TB_Correlation).")
+st.markdown(f"In this project, we visualize <a href={home_url+'/TB_Drug_Resistance'} target={target}>its rising trend in drug resistance</a>, [the burden caused by drug resistance]({home_url}/TB_Burden), and [socioeconomic factors that may help us hamper the trend]({home_url}/TB_Correlation).")
