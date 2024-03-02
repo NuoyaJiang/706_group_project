@@ -132,8 +132,6 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     y=alt.Y("e_inc_num:Q", title= 'TB Incidences'),#, scale=alt.Scale(domain=[subset['e_inc_num'].min()-20, subset['e_inc_num'].min()+20])),
     color=alt.Color('country:N'),
     tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="TB Incidence Rate")]
-).transform_filter(
-    selector
 ).properties(
     title=f'Yearly Trend of TB Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=600,
