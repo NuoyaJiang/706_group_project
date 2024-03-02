@@ -12,11 +12,12 @@ st.sidebar.header("TB Correlation")
 
 st.write("# TB Correlation")
 
-expenditure = pd.read_csv("data/TB_expenditure_utilisation_2024-02-21.csv")
+data = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
 
-subset = expenditure[["exp_cpp_dstb", "exp_cpp_mdr", "exp_fld", "exp_sld",
-                        "exp_lab", "exp_mdrmgt","exp_orsrvy","exp_oth",
-                        "exp_patsup","exp_prog","exp_staff"]]
+subset = data[["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist', 
+               "exp_cpp_dstb", "exp_cpp_mdr", "exp_fld", "exp_sld", 
+               "exp_lab", "exp_mdrmgt","exp_orsrvy","exp_oth", 
+               "exp_patsup","exp_prog","exp_staff"]]
 
 # corr_mat = np.corrcoef(subset)
 
