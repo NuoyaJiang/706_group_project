@@ -13,6 +13,7 @@ def load_data():
     return df, country_df
 
 df, country_df = load_data()
+country_df['country'] = country_df['Country']
 df = df.merge(country_df[['country', 'country-code']], on='country')
 
 #1. slider to choose year
