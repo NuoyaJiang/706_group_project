@@ -93,7 +93,7 @@ chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(colo
 #st.altair_chart(chart_resistance, use_container_width=True)
 
 df2 = df[df["country"].isin(countries_options)][["country", "year","e_rr_pct_ret", "country-code"]]
-df2['e_rr_pct_ret'] = df2['drug-resistance-percentage']
+df2.columns = ["country", "year","drug-resistance-percentage", "country-code"]
 st.write(df2)
 
 chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
