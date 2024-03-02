@@ -115,7 +115,7 @@ chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_in
 chart_trend = alt.Chart(df3).mark_line().encode(
     x='year:T',
     y="c_new_tsr:Q",
-    color=alt.Color('country:N')
+    color=alt.Color('country:N'),
     tooltip=['year:T', "c_new_tsr:Q"]
 ).properties(
     title=f'TB Treatment Success Rate Trend in',
