@@ -90,7 +90,7 @@ chart_treatmentrate = chart_base.mark_geoshape().encode(
     ).transform_filter(
     selector
     ).properties(
-    title=f'Average TB Treatment Success Rate Worldwide during {year_min} and {year_max}'
+    title=f'Average TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
 # fix the color schema so that it will not change upon user selection
@@ -101,7 +101,7 @@ chart_incidence = chart_base.mark_geoshape().encode(
     ).transform_filter(
     selector
 ).properties(
-    title=f'Average Estimated number of incident cases (all forms) Worldwide during {year_min} and {year_max}'
+    title=f'Average Estimated number of incident cases (all forms) Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
 chart2 = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
