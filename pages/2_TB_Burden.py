@@ -105,15 +105,16 @@ chart_incidence = chart_base.mark_geoshape().encode(
     title=f'Average Estimated number of incident cases (all forms) Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
-chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
-).resolve_scale(
-    color='independent'
-)
-
+#chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
+#).resolve_scale(
+#    color='independent'
+#)
+chart_treatmentrate = alt.vconcat(background + chart_treatmentrate).resolve_scale(color='independent')
+chart_incidence = alt.vconcat(background + chart_incidence).resolve_scale(color='independent')
 
 
 #4. individual smaller plots
-chart_trend = alt.Chart(subset).mark_line(point=True).encode(
+chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:T'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
     color=alt.Color('country:N'),
@@ -126,7 +127,24 @@ chart_trend = alt.Chart(subset).mark_line(point=True).encode(
     height=300
 )
 
-chart_all = chart_maps & chart_trend
+chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
+    x=alt.X('year:T'),
+    y=alt.Y("e_inc_num:Q", title= 'TB Incidences', scale=alt.Scale(domain=[subset['e_inc_num'].min()-20, subset['e_inc_num'].min()+20])),
+    color=alt.Color('country:N'),
+    tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="TB Incidence Rate")]
+).transform_filter(
+    selector
+).properties(
+    title=f'Yearly Trend of TB Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
+    width=600,
+    height=300
+)
+
+#chart_all = chart_maps & chart_trend_rate & chart_trend_incident
+chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
+chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
+chart_all = alt.vconcat(chart_top, chart_bottom).resolve_scale(color='independent')
+
 st.altair_chart(chart_all, use_container_width=True)
 
 
