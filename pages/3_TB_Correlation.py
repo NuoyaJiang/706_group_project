@@ -25,5 +25,5 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
-sns.heatmap(subset.corr(), ax=ax)
+sns.heatmap(subset.corr().iloc[4:,0:4], ax=ax)
 st.write(fig)
