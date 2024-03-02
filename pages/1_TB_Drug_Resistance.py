@@ -25,7 +25,7 @@ year_min = df["year"].min()
 year_max = df["year"].max()
 year = st.slider('Select a year', min_value=int(df['year'].min()), max_value=int(df['year'].max()), value=2019, step=1)
 
-countries = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil"]
+countries = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil", "China", "Canada"]
 countries_options = st.multiselect(
     "B) Choose countries to view:",
     df['country'].unique().tolist(),
