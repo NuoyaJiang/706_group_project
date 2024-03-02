@@ -40,7 +40,7 @@ df1 = df1[df1["country"].isin(countries_options)]
 df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
 df1 = df1.merge(country_df[['country', 'country-code']], on='country')
 df1.columns = ["country", "drug-resistance-percentage", "country-code"]
-
+st.write(df1)
 #df2 = df1.groupby(['country'])['e_rr_pct_new'].mean().reset_index()
 #df3 = df1.merge(df2, on = 'country')
 
@@ -92,7 +92,7 @@ chart_resistance = chart_base.mark_geoshape().encode(
 chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
 st.altair_chart(chart_resistance, use_container_width=True)
 
-st.write(df1)
+
 
 chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
     x=alt.X('year:T'),
