@@ -32,7 +32,7 @@ subset.columns = ['Percent of New Resistant Cases',
                   'Expenditure on National TB Programme staff', 
                   'Expenditure for TB Prevention']
 
-
+subset.iloc[:, 4:] = subset.iloc[:, 4:].apply(np.sqrt)
 corr_mat = subset.corr().iloc[6:,0:6]
 
 corr_mat = corr_mat.reset_index()
