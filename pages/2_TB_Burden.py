@@ -51,8 +51,8 @@ df3 = df3.merge(country_df[['country', 'country-code']], on='country')
 #df3 = df3[~((df3['c_new_tsr'].isna())|(df3['e_inc_num'].isna()))]
 
 
-width = 600
-height  = 300
+width = 500
+height  = 250
 project = 'equirectangular'
 
     # a gray map using as the visualization background
@@ -123,8 +123,8 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
     selector
 ).properties(
     title=f'Yearly Trend of TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
-    width=600,
-    height=300
+    width=width,
+    height=height
 )
 
 chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
@@ -136,8 +136,8 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     selector
 ).properties(
     title=f'Yearly Trend of TB Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
-    width=600,
-    height=300
+    width=width,
+    height=height
 )
 
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
