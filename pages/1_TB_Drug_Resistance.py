@@ -45,12 +45,8 @@ background = alt.Chart(source
 ).project(project)
 
 selector = alt.selection_single(
-    # add your code here
-    fields=['Country'],
-    on='click',
-
-    clear='dblclick'
-    )
+    fields=['country']
+)
 
 chart_base = alt.Chart(source
     ).properties(
