@@ -25,7 +25,7 @@ year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year
 subset = df[(df["year"] >= year_slider[0]) & (df["year"] <= year_slider[1])]
 
 #2. selection for countries
-countries = ["Albania", "Afghanistan"]
+countries = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil"]
 countries_options = st.multiselect(
     "B) Choose countries to view:",
     df['country'].unique().tolist(),
