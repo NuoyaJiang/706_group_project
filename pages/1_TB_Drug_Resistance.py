@@ -25,24 +25,28 @@ year_min = df["year"].min()
 year_max = df["year"].max()
 year = st.slider('Select a year', min_value=int(df['year'].min()), max_value=int(df['year'].max()), value=2019, step=1)
 
-
-
-
-df2 = df[df['year']==year]
-df2 = df2.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
-
 countries_options = st.multiselect(
     "B) Choose countries to view:",
     df['country'].unique().tolist(),
     "Albania"
 )
-subset = df2[df2["country"].isin(countries_options)]
+
+df1 = df[df['year']==year]
+df1 = df1[df1["country"].isin(countries_options)]
+
+
+
+df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
+df2 = df1.groupby(['country'])['e_rr_pct_new'].mean().reset_index()
+df3 = df1.merge(df2, on = 'country')
 
 source = alt.topo_feature(data.world_110m.url, 'countries')
+
 width = 600
 height  = 300
 project = 'equirectangular'
 
+    # a gray map using as the visualization background
 background = alt.Chart(source
 ).mark_geoshape(
     fill='#aaa',
@@ -52,10 +56,11 @@ background = alt.Chart(source
     height=height
 ).project(project)
 
+    #*******create a selector to link map visualization w/ later visualizations
 selector = alt.selection_single(
     fields=['country']
 )
-
+    #base plot
 chart_base = alt.Chart(source
     ).properties(
         width=width,
@@ -64,18 +69,33 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(subset, "country-code", ['e_rr_pct_ret']),
+        from_=alt.LookupData(df3, "country-code", ['country',"e_rr_pct_ret", "e_rr_pct_new"]),
 )
 
-rate_scale = alt.Scale(domain=[subset['e_rr_pct_ret'].min(), subset['e_rr_pct_ret'].max()], scheme='oranges')
+# fix the color schema so that it will not change upon user selection
+rate_scale = alt.Scale(domain=[df3['e_rr_pct_ret'].min(), df3['e_rr_pct_ret'].max()], scheme='oranges')
 rate_color = alt.Color(field="e_rr_pct_ret", type="quantitative", scale=rate_scale)
 
 chart_resistance = chart_base.mark_geoshape().encode(
-      color=alt.Color('e_rr_pct_ret:Q', scale=alt.Scale(scheme='oranges')),
-      tooltip=['country:N', 'e_rr_pct_ret:Q']
+      color=alt.Color('e_rr_pct_ret:Q', scale=alt.Scale(scheme='oranges'), title="Drug resistance percentage (%)"),
+      tooltip=['year:T', alt.Tooltip("e_rr_pct_ret:Q", title="R percentage")]
     ).transform_filter(
     selector
     ).properties(
-    title=f'Average TB Drug Resistance Percentage Worldwide in year {year}'
+    title=f'Average TB Treatment Success Rate Worldwide in {year}'
 )
+
+# fix the color schema so that it will not change upon user selection
+population_scale = alt.Scale(domain=[df3['e_rr_pct_new'].min(), df3['e_rr_pct_new'].max()], scheme='yellowgreenblue')
+chart_new_percent = chart_base.mark_geoshape().encode(
+      color=alt.Color('e_rr_pct_new:Q', title= "new percent"),
+      tooltip=['year:T', alt.Tooltip("e_rr_pct_new:Q", title="new percent")]
+    ).transform_filter(
+    selector
+).properties(
+    title=f'Average Estimated number of incident cases (all forms) Worldwide in {year}'
+)
+
+chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
+chart_new_percent = alt.vconcat(background + chart_new_percent).resolve_scale(color='independent')
 st.altair_chart(chart_resistance, use_container_width=True)
