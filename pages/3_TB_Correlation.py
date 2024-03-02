@@ -34,10 +34,13 @@ corr_mat = pd.melt(corr_mat, id_vars="index", value_name="Corr", var_name="TB Bu
 corr_mat.columns = ['Expenditure', 'TB Burden', 'Corr']
 
 corrplot = alt.Chart(corr_mat).mark_bar().encode(
-    x=alt.X("Expenditure:N"),
+    x=alt.Y("Expenditure:N"),
     color=alt.Color("Corr:Q"),
-    y=alt.Y("TB Burden:N"),
+    y=alt.X("TB Burden:N"),
     tooltip=["Corr:Q"],
+).configure_axis(
+        titleFontSize=14,
+        labelLimit=0
 )
 
 st.altair_chart(corrplot, use_container_width=True)
