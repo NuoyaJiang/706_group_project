@@ -34,8 +34,8 @@ corr_mat = pd.melt(corr_mat, id_vars="index", value_name="Corr", var_name="TB Bu
 corr_mat.columns = ['Expenditure', 'TB Burden', 'Corr']
 
 corrplot = alt.Chart(corr_mat).mark_bar().encode(
-    y=alt.Y("Expenditure:N"),
-    color=alt.Color("Corr:Q"),
+    y=alt.Y("Expenditure:N", title=""),
+    color=alt.Color("Corr:Q", title="Correlation"),
     x=alt.X("TB Burden:N"),
     tooltip=["Corr:Q"],
 ).configure_axis(
