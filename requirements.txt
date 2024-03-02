@@ -1,4 +1,7 @@
 vega_datasets
 pandas
+seaborn
+matplotlib
+numpy
 streamlit
 altair

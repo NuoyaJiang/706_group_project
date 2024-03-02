@@ -1,5 +1,6 @@
 import altair as alt
 import pandas as pd
+# import numpy as np
 import streamlit as st
 
 st.set_page_config(
@@ -9,23 +10,19 @@ st.set_page_config(
 
 st.sidebar.header("TB Correlation")
 
-
 st.write("# TB Correlation")
 
-st.markdown(
-    """
-    Streamlit is an open-source app framework built specifically for
-    Machine Learning and Data Science projects.
-    **👈 Select a demo from the sidebar** to see some examples
-    of what Streamlit can do!
-    ### Want to learn more?
-    - Check out [streamlit.iopagetbelowstreamlit.io]
-    - Jump into our [documentation](https://docs.streamlit.io)
-    - Ask a question in our [community
-        forums](https://discuss.streamlit.io)
-    ### See more complex demos
-    - Use a neural net to [analyze the Udacity Self-driving Car Image
-        Dataset](https://github.com/streamlit/demo-self-driving)
-    - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-"""
-)
+expenditure = pd.read_csv("data/TB_expenditure_utilisation_2024-02-21.csv")
+
+subset = expenditure[["exp_cpp_dstb", "exp_cpp_mdr", "exp_fld", "exp_sld",
+                        "exp_lab", "exp_mdrmgt","exp_orsrvy","exp_oth",
+                        "exp_patsup","exp_prog","exp_staff"]]
+
+# corr_mat = np.corrcoef(subset)
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+sns.heatmap(subset.corr(), ax=ax)
+st.write(fig)
