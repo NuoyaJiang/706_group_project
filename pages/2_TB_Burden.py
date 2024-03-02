@@ -115,7 +115,7 @@ chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_in
 #4. individual smaller plots
 chart_trend = alt.Chart(subset).mark_line().encode(
     x='year:T',
-    y="c_new_tsr:Q",
+    y=alt.Y("c_new_tsr:Q", scale=alt.Scale(type='log'),
     color=alt.Color('country:N'),
     tooltip=['year:T', "c_new_tsr:Q"]
 ).properties(
