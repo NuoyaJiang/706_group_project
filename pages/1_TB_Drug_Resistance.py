@@ -37,7 +37,7 @@ df1 = df1[df1["country"].isin(countries_options)]
 
 
 
-df1 = df1.groupby(['country'])['e_rr_pct_percent'].mean().reset_index()
+df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
 df1 = df1.merge(country_df[['country', 'country-code']], on='country')
 df1.columns = ["country", "drug-resistance-percentage", "country-code"]
 st.write(df1)
