@@ -92,7 +92,7 @@ chart_resistance = chart_base.mark_geoshape().encode(
 chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
 #st.altair_chart(chart_resistance, use_container_width=True)
 
-df2 = df[df["country"].isin(countries_options)]
+df2 = df[df["country"].isin(countries_options)][["country", "e_rr_pct_ret", "country-code"]]
 st.write(df2)
 
 chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
