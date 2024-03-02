@@ -11,7 +11,7 @@ st.write(
     """This page illustrates TB Worldwide Drug Resistance from 2018 to 2021"""
 )
 
-@st.cache_data
+@st.cache(allow_output_mutation=True)
 def load_data():
     df = pd.read_pickle("data/mtb_cleaned_data.pkl")
     country_df = pd.read_csv('https://raw.githubusercontent.com/hms-dbmi/bmi706-2022/main/cancer_data/country_codes.csv', dtype = {'conuntry-code': str})
