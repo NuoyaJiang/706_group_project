@@ -25,7 +25,7 @@ year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year
 subset = df[(df["year"] >= year_slider[0]) & (df["year"] <= year_slider[1])]
 
 #2. selection for countries
-countries = "Albania"
+countries = ["Albania", "Afghanistan"]
 countries_options = st.multiselect(
     "B) Choose countries to view:",
     df['country'].unique().tolist(),
@@ -47,6 +47,8 @@ source = alt.topo_feature(data.world_110m.url, 'countries')
 df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
 df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index()
 df3 = df1.merge(df2, on = 'country')
+df3 = df3.merge(country_df[['country', 'country-code']], on='country')
+
 
 width = 600
 height  = 300
@@ -75,7 +77,7 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df3, "country_code", ['country',"c_new_tsr", "e_inc_num"]),
+        from_=alt.LookupData(df3, "country-code", ['country',"c_new_tsr", "e_inc_num"]),
 )
 
 # fix the color schema so that it will not change upon user selection
@@ -84,7 +86,7 @@ rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
       color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges')),
-      tooltip=['country:N', 'c_new_tsr:Q']
+      tooltip=['country:N', "c_new_tsr:Q"]
     ).transform_filter(
     selector
     ).properties(
