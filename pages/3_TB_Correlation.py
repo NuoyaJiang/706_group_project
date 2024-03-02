@@ -1,6 +1,7 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -54,9 +55,9 @@ x_option = st.selectbox('Select X dimension', indices)
 y_option = st.selectbox('Select Y dimension', columns)
 
 x_var = ["exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth", 
-               "exp_patsup", "exp_staff"][x_option]
+               "exp_patsup", "exp_staff"][np.where(indices == x_option)]
 
-y_var = ["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist'][y_option]
+y_var = ["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist'][np.where(columns == y_option)]
 
 scatterplot = alt.Chart(data).mark_point().encode(
     y=alt.Y(y_var, title=y_option),
