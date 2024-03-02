@@ -1,9 +1,10 @@
-#from vega_datasets import data
+from vega_datasets import data
 import streamlit as st
 import time
 import numpy as np
 import pandas as pd
 import altair as alt
+from vega_datasets import data
 
 @st.cache
 def load_data():
@@ -36,8 +37,8 @@ subset = subset[subset["country"].isin(countries_options)]
 
 
 #3. wolrd maps
-#source = alt.topo_feature(data.world_110m.url, 'countries')
-world = alt.topo_feature('world_110m')
+source = alt.topo_feature(data.world_110m.url, 'countries')
+#world = alt.topo_feature('world_110m')
 
 df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
 df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index()
@@ -87,13 +88,7 @@ chart_treatmentrate = chart_base.mark_geoshape().encode(
 # fix the color schema so that it will not change upon user selection
 population_scale = alt.Scale(domain=[df2['e_inc_num'].min(), df2['e_inc_num'].max()], scheme='yellowgreenblue')
 chart_incidence = chart_base.mark_geoshape().encode(
-    ######################
-    # P3.2 map visualization showing the mortality rate
-    # add your code here
       color='e_inc_num:Q',
-     ######################
-    # P3.3 tooltip
-    # add your code here
       tooltip=['country:N', 'e_inc_num:Q']
     ).transform_filter(
     selector
