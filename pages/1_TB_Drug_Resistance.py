@@ -19,6 +19,5 @@ def load_data():
 df = load_data()
 year_min = df["year"].min()
 year_max = df["year"].max()
-year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year_min, year_max, (year_min, year_max))
-subset = df[(df["year"] >= year_slider[0]) & (df["year"] <= year_slider[1])]
+year = st.slider('Select a year', min_value=int(df['Year'].min()), max_value=int(df['Year'].max()), value=2012, step=1)
 
