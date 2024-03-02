@@ -69,7 +69,7 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df1, "country-code", ['c_new_tsr']),
+        from_=alt.LookupData(df1, "country", ['c_new_tsr']),
 )
 
 # fix the color schema so that it will not change upon user selection
