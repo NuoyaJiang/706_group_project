@@ -27,6 +27,6 @@ st.image('images/tuberculosis.jpeg', caption='Spread of Tuberculosis')
 
 st.markdown('Source: [Harvard Health](https://www.health.harvard.edu/a_to_z/tuberculosis-a-to-z)')
 
-st.image('images/resisting-bacteria.png', caption='Spread of Tuberculosis')
+st.image('images/resisting-bacteria.png', caption='Drug Resistance')
 
 st.markdown('Source: [It Ain\'t Magic](https://itaintmagic.riken.jp/hot-off-the-press/bacterial-drug-resistance-studied-by-robotic-e-coli-evolution/)')
