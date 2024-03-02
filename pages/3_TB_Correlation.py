@@ -15,23 +15,24 @@ st.sidebar.header("TB Correlation")
 st.write("# TB Correlation")
 
 data = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
-
-corr_mat = data[["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist', 
+subset = data[["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist', 
                "exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth", 
-               "exp_patsup", "exp_staff"]].corr().iloc[4:,0:4]
+               "exp_patsup", "exp_staff"]]
 
-columns = ['Percent of New Resistant Cases', 'Percent of Treated Resistant Cases', 
-           'All New Case Treatment Success Rate', 'Resistant Case Treatment Success Rate']
+subset.columns = ['Percent of New Resistant Cases', 
+                  'Percent of Treated Resistant Cases', 
+                  'All New Case Treatment Success Rate', 
+                  'Resistant Case Treatment Success Rate', 
+                  'Expenditure for Drug-susceptible TB', 
+                  'Expenditure for Drug-resistant TB', 
+                  'Expenditure on Laboratory Infrastructure', 
+                  'Expenditure on Operational Research', 
+                  'Expenditure on All Other Budget Line Items',
+                  'Expenditure on Patient Support', 
+                  'Expenditure on National TB Programme staff ']
 
 
-corr_mat.columns = columns
-
-indices = ['Expenditure for Drug-susceptible TB', 'Expenditure for Drug-resistant TB', 
-            'Expenditure on Laboratory Infrastructure', 'Expenditure on Operational Research', 
-            'Expenditure on All Other Budget Line Items',
-            'Expenditure on Patient Support', 'Expenditure on National TB Programme staff ']
-
-corr_mat.index = indices
+corr_mat = subset.corr().iloc[4:,0:4]
 
 corr_mat = corr_mat.reset_index()
 
@@ -54,17 +55,9 @@ st.altair_chart(corrplot, use_container_width=True)
 x_option = st.selectbox('Select X dimension', indices)
 y_option = st.selectbox('Select Y dimension', columns)
 
-x_var = np.array(["exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth", 
-               "exp_patsup", "exp_staff"])[np.where(indices == x_option)]
-
-y_var = np.array(["e_rr_pct_new", "e_rr_pct_ret", 
-                  'c_new_tsr', 'c_tsr_resist'])[np.where(columns == y_option)]
-
-st.write(str(x_var))
-
-scatterplot = alt.Chart(data).mark_point().encode(
-    y=alt.Y(y_var, title=y_option),
-    x=alt.X(x_var, title=x_option),
+scatterplot = alt.Chart(subset).mark_point().encode(
+    y=alt.Y(y_option, title=y_option),
+    x=alt.X(x_option, title=x_option),
 ).configure_axis(
         titleFontSize=14,
         labelLimit=0
