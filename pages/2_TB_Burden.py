@@ -129,7 +129,7 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:T'),
-    y=alt.Y("e_inc_num:Q", title= 'TB Incidences (per 100,000 population)'),#, scale=alt.Scale(domain=[subset['e_inc_num'].min()-20, subset['e_inc_num'].min()+20])),
+    y=alt.Y("e_inc_num:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
     tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
 ).transform_filter(
