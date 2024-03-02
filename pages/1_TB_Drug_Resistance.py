@@ -38,6 +38,7 @@ df1 = df1[df1["country"].isin(countries_options)]
 
 
 df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
+st.write(df1.head())
 #df2 = df1.groupby(['country'])['e_rr_pct_new'].mean().reset_index()
 #df3 = df1.merge(df2, on = 'country')
 
