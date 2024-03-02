@@ -26,11 +26,19 @@ year_max = df["year"].max()
 year = st.slider('Select a year', min_value=int(df['year'].min()), max_value=int(df['year'].max()), value=2019, step=1)
 
 
-source = alt.topo_feature(data.world_110m.url, 'countries')
+
+
 df2 = df[df['year']==year]
 df2 = df2.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
 
+countries_options = st.multiselect(
+    "B) Choose countries to view:",
+    df['country'].unique().tolist(),
+    "Albania"
+)
+subset = df2[df2["country"].isin(countries_options)]
 
+source = alt.topo_feature(data.world_110m.url, 'countries')
 width = 600
 height  = 300
 project = 'equirectangular'
@@ -56,10 +64,10 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df2, "country-code", ['e_rr_pct_ret']),
+        from_=alt.LookupData(subset, "country-code", ['e_rr_pct_ret']),
 )
 
-rate_scale = alt.Scale(domain=[df2['e_rr_pct_ret'].min(), df2['e_rr_pct_ret'].max()], scheme='oranges')
+rate_scale = alt.Scale(domain=[subset['e_rr_pct_ret'].min(), subset['e_rr_pct_ret'].max()], scheme='oranges')
 rate_color = alt.Color(field="e_rr_pct_ret", type="quantitative", scale=rate_scale)
 
 chart_resistance = chart_base.mark_geoshape().encode(
@@ -70,4 +78,4 @@ chart_resistance = chart_base.mark_geoshape().encode(
     ).properties(
     title=f'Average TB Drug Resistance Percentage Worldwide in year {year}'
 )
-st.altair_chart(chart_resistance)
+st.altair_chart(chart_resistance, use_container_width=True)
