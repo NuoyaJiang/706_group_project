@@ -87,7 +87,7 @@ rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
       color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)"),
-      tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="Treatment \n Success Rate")]
+      tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="Treatment <br>Success Rate")]
     ).transform_filter(
     selector
     ).properties(
