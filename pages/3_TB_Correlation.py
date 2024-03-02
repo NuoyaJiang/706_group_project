@@ -32,6 +32,7 @@ corr_mat = corr_mat.reset_index()
 
 corr_mat = pd.melt(corr_mat, id_vars="index", value_name="Corr", var_name="TB Burden")
 corr_mat.columns = ['Expenditure', 'TB Burden', 'Corr']
+corr_mat['Corr'] = corr_mat['Corr'].round(2)
 
 corrplot = alt.Chart(corr_mat).mark_bar().encode(
     y=alt.Y("Expenditure:N", title=""),
