@@ -40,7 +40,7 @@ df1 = df1[df1["country"].isin(countries_options)]
 df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
 df1 = df1.merge(country_df[['country', 'country-code']], on='country')
 df1.columns = ["country", "drug-resistance-percentage", "country-code"]
-st.write(df1)
+
 #df2 = df1.groupby(['country'])['e_rr_pct_new'].mean().reset_index()
 #df3 = df1.merge(df2, on = 'country')
 
@@ -76,7 +76,6 @@ chart_base = alt.Chart(source
         from_=alt.LookupData(df1, "country-code", ['country',"drug-resistance-percentage"]),
 )
 
-# fix the color schema so that it will not change upon user selection
 rate_scale = alt.Scale(domain=[df1['drug-resistance-percentage'].min(), df1['drug-resistance-percentage'].max()], scheme='oranges')
 rate_color = alt.Color(field="drug-resistance-percentage", type="quantitative", scale=rate_scale)
 
@@ -89,8 +88,32 @@ chart_resistance = chart_base.mark_geoshape().encode(
     title=f'Average TB Treatment Success Rate Worldwide in {year}'
 )
 
-# fix the color schema so that it will not change upon user selection
 
 chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
-#chart_new_percent = alt.vconcat(background + chart_new_percent).resolve_scale(color='independent')
+
 st.altair_chart(chart_resistance, use_container_width=True)
+
+st.write(df1)
+
+chart_trend_rate = alt.Chart(df1).mark_line(point=True).encode(
+    x=alt.X('year:T'),
+    y=alt.Y("drug-resistance-percentage:Q", title= 'TB drug resistance percentage (%)', scale=alt.Scale(type='log', domain=[df1['drug-resistance-percentage'].min()-5, 100])),
+    color=alt.Color('country:N'),
+    tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="TB Treatment Success Rate (%)")]
+).transform_filter(
+    selector
+).properties(
+    title=f'Yearly Trend of TB Treatment Success Rate Worldwide in {year}',
+    width=width,
+    height=height
+)
+st.altair_chart(chart_trend_rate, use_container_width=True)
+
+
+countries_in_subset = df1["country"].unique()
+if len(countries_in_subset) != len(countries):
+    if len(countries_in_subset) == 0:
+        st.write("No data avaiable for given subset.")
+    else:
+        missing = set(countries) - set(countries_in_subset)
+        st.write("No data available for " + ", ".join(missing) + ".")
