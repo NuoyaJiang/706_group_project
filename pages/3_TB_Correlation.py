@@ -19,14 +19,19 @@ corr_mat = data[["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist',
                "exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth", 
                "exp_patsup", "exp_staff"]].corr().iloc[4:,0:4]
 
-corr_mat.columns = ['Percent of New Resistant Cases', 'Percent of Treated Resistant Cases', 
+columns = ['Percent of New Resistant Cases', 'Percent of Treated Resistant Cases', 
                     'All New Case Treatment Success Rate', 'Resistant Case Treatment Success Rate']
 
 
-corr_mat.index = ['Expenditure for Drug-susceptible TB', 'Expenditure for Drug-resistant TB', 
+corr_mat.columns = columns
+
+indices = ['Expenditure for Drug-susceptible TB', 'Expenditure for Drug-resistant TB', 
                   'Expenditure on Laboratory Infrastructure', 'Expenditure on Operational Research', 
                   'Expenditure on All Other Budget Line Items',
                   'Expenditure on Patient Support', 'Expenditure on National TB Programme staff ']
+
+
+corr_mat.index = indices
 
 corr_mat = corr_mat.reset_index()
 
@@ -45,3 +50,6 @@ corrplot = alt.Chart(corr_mat).mark_bar().encode(
 )
 
 st.altair_chart(corrplot, use_container_width=True)
+
+x_option = st.selectbox('Select X dimension', indices)
+y_option = st.selectbox('Select Y dimension', columns)
