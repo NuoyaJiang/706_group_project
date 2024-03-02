@@ -6,7 +6,7 @@ import pandas as pd
 import altair as alt
 from vega_datasets import data
 
-@st.cache
+@st.cache(allow_output_mutation=True)
 def load_data():
     df = pd.read_pickle("data/mtb_cleaned_data.pkl")
     country_df = pd.read_csv('https://raw.githubusercontent.com/hms-dbmi/bmi706-2022/main/cancer_data/country_codes.csv', dtype = {'conuntry-code': str})
@@ -18,6 +18,7 @@ df = df.merge(country_df[['country', 'country-code']], on='country')
 
 #1. slider to choose year
 st.write("## Visualize the temporal trend of TB burden across different countries")
+st.sidebar.header("TB Burden")
 year_min = df["year"].min()
 year_max = df["year"].max()
 year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year_min, year_max, (year_min, year_max))
