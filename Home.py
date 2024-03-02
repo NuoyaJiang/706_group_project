@@ -19,4 +19,4 @@ st.markdown(
 """
 )
 
-st.markdown(f"In this project, we visualize <a href={home_url+'/TB_Drug_Resistance'}>its rising trend in drug resistance</a>, [the burden caused by drug resistance]({home_url}/TB_Burden), and [socioeconomic factors that may help us hamper the trend]({home_url}/TB_Correlation).", unsafe_allow_html=True)
+st.markdown(f"In this project, we visualize <a href={home_url+'/TB_Drug_Resistance'} target='_self'>its rising trend in drug resistance</a>, [the burden caused by drug resistance]({home_url}/TB_Burden), and [socioeconomic factors that may help us hamper the trend]({home_url}/TB_Correlation).")
