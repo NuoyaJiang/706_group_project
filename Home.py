@@ -12,7 +12,7 @@ target = "_self"
 
 st.write("# Welcome to Group NLM!")
 
-# st.sidebar.success("Select a demo above.")
+st.sidebar.header("Home")
 
 st.markdown(
     """
