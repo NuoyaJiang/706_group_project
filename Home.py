@@ -7,7 +7,7 @@ st.set_page_config(
     page_icon="🦠",
 )
 
-home_url = "https://706groupprojectlmn.streamlit.app/TB_Drug_Resistance"
+home_url = "https://706groupprojectlmn.streamlit.app"
 
 st.write("# Welcome to Group NLM!")
 
