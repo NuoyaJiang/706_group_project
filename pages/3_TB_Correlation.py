@@ -32,7 +32,7 @@ subset.columns = ['Percent of New Resistant Cases',
                   'Expenditure on National TB Programme staff ']
 
 
-corr_mat = subset.corr().iloc[6:,0:6]
+corr_mat = subset.apply(np.sqrt).corr().iloc[6:,0:6]
 
 corr_mat = corr_mat.reset_index()
 
@@ -56,7 +56,7 @@ x_option = st.selectbox('Select X dimension', subset.columns[6:])
 y_option = st.selectbox('Select Y dimension', subset.columns[0:6])
 
 scatterplot = alt.Chart(subset).mark_point().encode(
-    y=alt.Y(y_option, title=y_option, scale=alt.Scale(type='sqrt')),
+    y=alt.Y(y_option, title=y_option),
     x=alt.X(x_option, title=x_option, scale=alt.Scale(type='sqrt')),
 ).configure_axis(
         titleFontSize=14,
