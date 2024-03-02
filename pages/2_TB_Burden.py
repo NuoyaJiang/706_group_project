@@ -6,6 +6,11 @@ import pandas as pd
 import altair as alt
 from vega_datasets import data
 
+st.set_page_config(
+    page_title="TB Drug Burden",
+    page_icon="🦠",
+)
+
 @st.cache(allow_output_mutation=True)
 def load_data():
     df = pd.read_pickle("data/mtb_cleaned_data.pkl")
