@@ -57,7 +57,7 @@ y_option = st.selectbox('Select Y dimension', subset.columns[0:6])
 
 scatterplot = alt.Chart(subset).mark_point().encode(
     y=alt.Y(y_option, title=y_option),
-    x=alt.X(x_option, title=x_option),
+    x=alt.X(x_option, title=x_option, scale=alt.Scale(type='symlog')),
 ).configure_axis(
         titleFontSize=14,
         labelLimit=0
