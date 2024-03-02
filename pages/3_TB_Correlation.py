@@ -36,7 +36,7 @@ corr_mat['Corr'] = corr_mat['Corr'].round(2)
 
 corrplot = alt.Chart(corr_mat).mark_bar().encode(
     y=alt.Y("Expenditure:N", title=""),
-    color=alt.Color("Corr:Q", title="Correlation").scale(scheme='plasma'),
+    color=alt.Color("Corr:Q", title="Correlation").scale(scheme='turbo'),
     x=alt.X("TB Burden:N"),
     tooltip=["Corr:Q"],
 ).configure_axis(
