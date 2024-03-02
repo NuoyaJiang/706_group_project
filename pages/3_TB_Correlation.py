@@ -20,9 +20,9 @@ subset = expenditure[["exp_cpp_dstb", "exp_cpp_mdr", "exp_fld", "exp_sld",
 
 # corr_mat = np.corrcoef(subset)
 
-# import seaborn as sns
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
-ax.matshow(subset.corr(), ax=ax)
+sns.heatmap(subset.corr(), ax=ax)
 st.write(fig)
