@@ -24,7 +24,7 @@ corr_mat = subset.corr().iloc[4:,0:4].reset_index()
 corr_mat = pd.melt(corr_mat, id_vars="index", value_name="Corr", var_name="TB Burden")
 corr_mat.columns = ['Expenditure', 'TB Burden', 'Corr']
 
-corrplot = alt.Chart(subset).mark_bar().encode(
+corrplot = alt.Chart(corr_mat).mark_bar().encode(
     x=alt.X("Expenditure:O"),
     color=alt.Color("Corr:Q"),
     y=alt.Y("TB Burden:N"),
