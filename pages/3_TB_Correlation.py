@@ -41,7 +41,7 @@ corr_mat['Corr'] = corr_mat['Corr'].round(2)
 
 corrplot = alt.Chart(corr_mat).mark_bar().encode(
     y=alt.Y("Expenditure:N", title=""),
-    color=alt.Color("Corr:Q", title="Correlation").scale(scheme='turbo'),
+    color=alt.Color("Corr:Q", title="Correlation").scale(scheme='blueorange'),
     x=alt.X("TB Burden:N"),
     tooltip=["Corr:Q"],
 ).configure_axis(
@@ -54,10 +54,11 @@ st.altair_chart(corrplot, use_container_width=True)
 x_option = st.selectbox('Select X dimension', indices)
 y_option = st.selectbox('Select Y dimension', columns)
 
-x_var = ["exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth", 
-               "exp_patsup", "exp_staff"][np.where(indices == x_option)]
+x_var = np.array(["exp_fld", "exp_sld", "exp_lab","exp_orsrvy","exp_oth", 
+               "exp_patsup", "exp_staff"])[np.where(indices == x_option)]
 
-y_var = ["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist'][np.where(columns == y_option)]
+y_var = np.array(["e_rr_pct_new", "e_rr_pct_ret", 
+                  'c_new_tsr', 'c_tsr_resist'])[np.where(columns == y_option)]
 
 scatterplot = alt.Chart(data).mark_point().encode(
     y=alt.Y(y_var, title=y_option),
