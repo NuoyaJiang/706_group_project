@@ -25,10 +25,11 @@ year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year
 subset = df[(df["year"] >= year_slider[0]) & (df["year"] <= year_slider[1])]
 
 #2. selection for countries
+countries = "Albania"
 countries_options = st.multiselect(
     "B) Choose countries to view:",
     df['country'].unique().tolist(),
-    "Albania"
+    countries
 )
 subset = subset[subset["country"].isin(countries_options)]
 
@@ -74,7 +75,7 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df3, "country_code", ['country','c_new_tsr', 'e_inc_num']),
+        from_=alt.LookupData(df3, "country_code", ['country',"c_new_tsr", "e_inc_num"]),
 )
 
 # fix the color schema so that it will not change upon user selection
@@ -107,3 +108,12 @@ chart2 = alt.vconcat(background + chart_treatmentrate, background + chart_incide
 )
 
 st.altair_chart(chart2, use_container_width=True)
+
+
+countries_in_subset = df3["country"].unique()
+if len(countries_in_subset) != len(countries):
+    if len(countries_in_subset) == 0:
+        st.write("No data avaiable for given subset.")
+    else:
+        missing = set(countries) - set(countries_in_subset)
+        st.write("No data available for " + ", ".join(missing) + ".")
