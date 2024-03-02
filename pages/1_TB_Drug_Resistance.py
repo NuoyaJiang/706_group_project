@@ -8,7 +8,7 @@ from vega_datasets import data
 st.markdown("# Drug Resistance")
 st.sidebar.header("Drug Resistance")
 st.write(
-    """This page illustrates TB Worldwide Drug Resistance from 2018 to 2022"""
+    """This page illustrates TB Worldwide Drug Resistance from 2018 to 2021"""
 )
 
 @st.cache(allow_output_mutation=True)
@@ -45,12 +45,8 @@ background = alt.Chart(source
 ).project(project)
 
 selector = alt.selection_single(
-    # add your code here
-    fields=['Country'],
-    on='click',
-
-    clear='dblclick'
-    )
+    fields=['country']
+)
 
 chart_base = alt.Chart(source
     ).properties(
@@ -74,3 +70,4 @@ chart_resistance = chart_base.mark_geoshape().encode(
     ).properties(
     title=f'Average TB Drug Resistance Percentage Worldwide in year {year}'
 )
+st.altair_chart(chart_resistance)
