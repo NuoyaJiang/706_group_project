@@ -12,7 +12,7 @@ target = "_self"
 
 st.write("# Welcome to Group NLM!")
 
-# st.sidebar.success("Select a demo above.")
+st.sidebar.header("Home")
 
 st.markdown(
     """
@@ -22,3 +22,11 @@ st.markdown(
 )
 
 st.markdown(f"In this project, we visualize <a href={home_url+'/TB_Drug_Resistance'} target={target}>its rising trend in drug resistance</a>, <a href={home_url+'/TB_Burden'} target={target}>the burden caused by drug resistance</a>, and <a href={home_url+'/TB_Correlation'} target={target}>socioeconomic factors that may help us hamper the trend</a> with data from [WHO Global Tuberculosis Programme](https://www.who.int/teams/global-tuberculosis-programme/data). We hope our efforts could raise more awareness of the issue.", unsafe_allow_html=True)
+
+st.image('images/tuberculosis.jpeg', caption='Spread of Tuberculosis')
+
+st.markdown('Source: [Harvard Health](https://www.health.harvard.edu/a_to_z/tuberculosis-a-to-z)')
+
+st.image('images/resisting-bacteria.png', caption='Drug Resistance')
+
+st.markdown('Source: [It Ain\'t Magic](https://itaintmagic.riken.jp/hot-off-the-press/bacterial-drug-resistance-studied-by-robotic-e-coli-evolution/)')

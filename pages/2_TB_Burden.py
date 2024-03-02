@@ -25,10 +25,11 @@ year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year
 subset = df[(df["year"] >= year_slider[0]) & (df["year"] <= year_slider[1])]
 
 #2. selection for countries
+countries = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil"]
 countries_options = st.multiselect(
     "B) Choose countries to view:",
     df['country'].unique().tolist(),
-    "Albania"
+    countries
 )
 subset = subset[subset["country"].isin(countries_options)]
 
@@ -46,9 +47,12 @@ source = alt.topo_feature(data.world_110m.url, 'countries')
 df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
 df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index()
 df3 = df1.merge(df2, on = 'country')
+df3 = df3.merge(country_df[['country', 'country-code']], on='country')
+#df3 = df3[~((df3['c_new_tsr'].isna())|(df3['e_inc_num'].isna()))]
 
-width = 600
-height  = 300
+
+width = 450
+height  = 225
 project = 'equirectangular'
 
     # a gray map using as the visualization background
@@ -74,7 +78,7 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df3, "country_code", ['country','c_new_tsr', 'e_inc_num']),
+        from_=alt.LookupData(df3, "country-code", ['country',"c_new_tsr", "e_inc_num"]),
 )
 
 # fix the color schema so that it will not change upon user selection
@@ -82,28 +86,72 @@ rate_scale = alt.Scale(domain=[df3['c_new_tsr'].min(), df3['c_new_tsr'].max()], 
 rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
-      color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges')),
-      tooltip=['country:N', 'c_new_tsr:Q']
+      color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)"),
+      tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")]
     ).transform_filter(
     selector
     ).properties(
-    title=f'Average TB Treatment Success Rate Worldwide during {year_min} and {year_max}'
+    title=f'Average TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
 # fix the color schema so that it will not change upon user selection
 population_scale = alt.Scale(domain=[df3['e_inc_num'].min(), df3['e_inc_num'].max()], scheme='yellowgreenblue')
 chart_incidence = chart_base.mark_geoshape().encode(
-      color='e_inc_num:Q',
-      tooltip=['country:N', 'e_inc_num:Q']
+      color=alt.Color('e_inc_num:Q', title= "cases per 100,000 population"),
+      tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
 ).properties(
-    title=f'Average Estimated number of incident cases (all forms) Worldwide during {year_min} and {year_max}'
+    title=f'Average Estimated number of incident cases (all forms) Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
-chart2 = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
-).resolve_scale(
-    color='independent'
+#chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
+#).resolve_scale(
+#    color='independent'
+#)
+chart_treatmentrate = alt.vconcat(background + chart_treatmentrate).resolve_scale(color='independent')
+chart_incidence = alt.vconcat(background + chart_incidence).resolve_scale(color='independent')
+
+
+#4. individual smaller plots
+chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
+    x=alt.X('year:T'),
+    y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
+    color=alt.Color('country:N'),
+    tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)")]
+).transform_filter(
+    selector
+).properties(
+    title=f'Yearly Trend of TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
+    width=width,
+    height=height
 )
 
-st.altair_chart(chart2, use_container_width=True)
+chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
+    x=alt.X('year:T'),
+    y=alt.Y("e_inc_num:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
+    color=alt.Color('country:N'),
+    tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
+).transform_filter(
+    selector
+).properties(
+    title=f'Yearly Trend of TB Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
+    width=width,
+    height=height
+)
+
+#chart_all = chart_maps & chart_trend_rate & chart_trend_incident
+chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
+chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
+chart_all = chart_top & chart_bottom
+
+st.altair_chart(chart_all, use_container_width=True)
+
+
+countries_in_subset = df3["country"].unique()
+if len(countries_in_subset) != len(countries):
+    if len(countries_in_subset) == 0:
+        st.write("No data avaiable for given subset.")
+    else:
+        missing = set(countries) - set(countries_in_subset)
+        st.write("No data available for " + ", ".join(missing) + ".")

@@ -7,6 +7,9 @@ st.set_page_config(
     page_icon="🦠",
 )
 
+st.sidebar.header("TB Correlation")
+
+
 st.write("# TB Correlation")
 
 st.markdown(
