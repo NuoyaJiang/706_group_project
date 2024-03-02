@@ -19,5 +19,5 @@ def load_data():
 df = load_data()
 year_min = df["year"].min()
 year_max = df["year"].max()
-year = st.slider('Select a year', min_value=int(df['Year'].min()), max_value=int(df['Year'].max()), value=2012, step=1)
+year = st.slider('Select a year', min_value=int(df['year'].min()), max_value=int(df['year'].max()), value=2019, step=1)
 
