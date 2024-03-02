@@ -48,7 +48,7 @@ df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
 df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index()
 df3 = df1.merge(df2, on = 'country')
 df3 = df3.merge(country_df[['country', 'country-code']], on='country')
-df3 = df3[~((df3['c_new_tsr'].isna())|(df3['e_inc_num'].isna()))]
+#df3 = df3[~((df3['c_new_tsr'].isna())|(df3['e_inc_num'].isna()))]
 
 
 width = 600
@@ -113,7 +113,7 @@ chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_in
 
 
 #4. individual smaller plots
-chart_trend = alt.Chart(df3).mark_line().encode(
+chart_trend = alt.Chart(subset).mark_line().encode(
     x='year:T',
     y="c_new_tsr:Q",
     color=alt.Color('country:N'),
