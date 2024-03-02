@@ -112,18 +112,16 @@ chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_in
 
 
 #4. individual smaller plots
-for selected_country in countries_options:
-    country_data = df3[df3['country'] == selected_country]
-
-    chart_trend = alt.Chart(country_data).mark_line().encode(
-        x='year:T',
-        y="c_new_tsr:Q",
-        tooltip=['year:T', "c_new_tsr:Q"]
-    ).properties(
-        title=f'TB Treatment Success Rate Trend in {selected_country}',
-        width=600,
-        height=300
-    )
+chart_trend = alt.Chart(df3).mark_line().encode(
+    x='year:T',
+    y="c_new_tsr:Q",
+    color=alt.Color('country:N')
+    tooltip=['year:T', "c_new_tsr:Q"]
+).properties(
+    title=f'TB Treatment Success Rate Trend in',
+    width=600,
+    height=300
+)
 
 chart_all = chart_maps & chart_trend
 st.altair_chart(chart_all, use_container_width=True)
