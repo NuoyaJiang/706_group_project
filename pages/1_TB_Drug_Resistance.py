@@ -37,9 +37,10 @@ df1 = df1[df1["country"].isin(countries_options)]
 
 
 
-df1 = df1.groupby(['country'])['e_rr_pct_ret'].mean().reset_index()
+df1 = df1.groupby(['country'])['drug-resistance-percentage'].mean().reset_index()
 df1 = df1.merge(country_df[['country', 'country-code']], on='country')
-st.write(df1.head())
+df1.columns = ["country", "drug-resistance-percentage", "country-code"]
+st.write(df1)
 #df2 = df1.groupby(['country'])['e_rr_pct_new'].mean().reset_index()
 #df3 = df1.merge(df2, on = 'country')
 
@@ -72,16 +73,16 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df1, "country-code", ['country',"e_rr_pct_ret"]),
+        from_=alt.LookupData(df1, "country-code", ['country',"drug-resistance-percentage"]),
 )
 
 # fix the color schema so that it will not change upon user selection
-rate_scale = alt.Scale(domain=[df1['e_rr_pct_ret'].min(), df1['e_rr_pct_ret'].max()], scheme='oranges')
-rate_color = alt.Color(field="e_rr_pct_ret", type="quantitative", scale=rate_scale)
+rate_scale = alt.Scale(domain=[df1['drug-resistance-percentage'].min(), df1['drug-resistance-percentage'].max()], scheme='oranges')
+rate_color = alt.Color(field="drug-resistance-percentage", type="quantitative", scale=rate_scale)
 
 chart_resistance = chart_base.mark_geoshape().encode(
-      color=alt.Color('e_rr_pct_ret:Q', scale=alt.Scale(scheme='oranges'), title="Drug resistance percentage (%)"),
-      tooltip=['year:T', alt.Tooltip("e_rr_pct_ret:Q", title="R percentage")]
+      color=alt.Color('drug-resistance-percentage:Q', scale=alt.Scale(scheme='oranges'), title="Drug resistance percentage (%)"),
+      tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="R percentage")]
     ).transform_filter(
     selector
     ).properties(
