@@ -6,6 +6,10 @@ import pandas as pd
 from vega_datasets import data
 
 st.markdown("# Drug Resistance")
+st.set_page_config(
+    page_title="TB Drug Resistance",
+    page_icon="🦠",
+)
 st.sidebar.header("Drug Resistance")
 st.write(
     """This page illustrates TB Worldwide Drug Resistance from 2018 to 2021"""
