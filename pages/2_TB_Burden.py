@@ -29,7 +29,7 @@ year_max = df["year"].max()
 year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year_min, year_max, (year_min, year_max))
 subset = df[(df["year"] >= year_slider[0]) & (df["year"] <= year_slider[1])]
 
-#2. selection for countries
+#2. selection for countries, variable calculations
 countries = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil"]
 countries_options = st.multiselect(
     "B) Choose countries to view:",
@@ -37,22 +37,28 @@ countries_options = st.multiselect(
     countries
 )
 subset = subset[subset["country"].isin(countries_options)]
+#e_rr_pct_new #Estimated percentage of new TB cases with rifampicin resistant TB
+#e_rr_pct_ret #Estimated percentage of previously treated TB cases with rifampicin resistant TB
+    ### ('e_rr_pct_new' + 'e_rr_pct_ret') * 'e_inc_num' = TB resistant cases
+subset['incidence_resistant'] = (subset['e_rr_pct_new'] + subset['e_rr_pct_ret']) * subset['e_inc_num']
 
+#mdr_coh #Outcomes for MDR-TB cases: cohort size
+#mdr_succ #Outcomes for MDR-TB cases: treatment success (Cured or treatment completed)
+    ### 'mdr_succ' / 'mdr_coh' = treatment success rate for TB resistant patients
+subset['success_rate_resistant'] = subset['mdr_succ'] / subset['mdr_coh']
 
-
-#Treatment successful rate, incidence rate
-#e_inc_num#Estimated number of incident cases (all forms)
-#c_new_tsr ##Treatment success rate for all new cases (including relapse cases if rel_with_new_flg = 1), percent
 
 
 #3. wolrd maps
 source = alt.topo_feature(data.world_110m.url, 'countries')
-#world = alt.topo_feature('world_110m')
 
-df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index()
-df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index()
-df3 = df1.merge(df2, on = 'country')
-df3 = df3.merge(country_df[['country', 'country-code']], on='country')
+df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index() #e_inc_num#Estimated number of incident cases (all forms)
+df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index() ##c_new_tsr ##Treatment success rate for all new cases (including relapse cases if rel_with_new_flg = 1), percent
+df3 = subset.groupby(['country'])['incidence_resistant'].mean().reset_index()
+df4 = subset.groupby(['country'])['success_rate_resistant'].mean().reset_index()
+
+df_mean = df1.merge(df2, on = 'country').merge(df3, on='country').merge(df4, on='country')
+df_mean = df_mean.merge(country_df[['country', 'country-code']], on='country')
 #df3 = df3[~((df3['c_new_tsr'].isna())|(df3['e_inc_num'].isna()))]
 
 
@@ -83,16 +89,16 @@ chart_base = alt.Chart(source
     ).add_selection(selector
     ).transform_lookup(
         lookup="id",
-        from_=alt.LookupData(df3, "country-code", ['country',"c_new_tsr", "e_inc_num"]),
+        from_=alt.LookupData(df_mean, "country-code", ['country',"c_new_tsr", "e_inc_num"]),
 )
 
 # fix the color schema so that it will not change upon user selection
-rate_scale = alt.Scale(domain=[df3['c_new_tsr'].min(), df3['c_new_tsr'].max()], scheme='oranges')
+rate_scale = alt.Scale(domain=[df_mean['c_new_tsr'].min(), df_mean['c_new_tsr'].max()], scheme='oranges')
 rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
       color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)"),
-      tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")]
+      tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")]
     ).transform_filter(
     selector
     ).properties(
@@ -100,10 +106,10 @@ chart_treatmentrate = chart_base.mark_geoshape().encode(
 )
 
 # fix the color schema so that it will not change upon user selection
-population_scale = alt.Scale(domain=[df3['e_inc_num'].min(), df3['e_inc_num'].max()], scheme='yellowgreenblue')
+population_scale = alt.Scale(domain=[df_mean['e_inc_num'].min(), df_mean['e_inc_num'].max()], scheme='yellowgreenblue')
 chart_incidence = chart_base.mark_geoshape().encode(
       color=alt.Color('e_inc_num:Q', title= "cases per 100,000 population"),
-      tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
+      tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
 ).properties(
@@ -123,7 +129,7 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
     color=alt.Color('country:N'),
-    tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)")]
+    tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)")]
 ).transform_filter(
     selector
 ).properties(
@@ -136,7 +142,7 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("e_inc_num:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
-    tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
+    tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
 ).transform_filter(
     selector
 ).properties(
@@ -144,6 +150,13 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     width=width,
     height=height
 )
+
+
+
+
+
+
+
 
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
 chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
