@@ -49,7 +49,7 @@ subset['success_rate_resistant'] = subset['mdr_succ'] / subset['mdr_coh']
 
 
 
-#3. wolrd maps
+#3. wolrd maps - all cases
 source = alt.topo_feature(data.world_110m.url, 'countries')
 
 df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index() #e_inc_num#Estimated number of incident cases (all forms)
@@ -117,15 +117,73 @@ chart_incidence = chart_base.mark_geoshape().encode(
     title=f'Average Estimated TB Incidences Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
-#chart_maps = alt.vconcat(background + chart_treatmentrate, background + chart_incidence
-#).resolve_scale(
-#    color='independent'
-#)
 chart_treatmentrate = alt.vconcat(background + chart_treatmentrate).resolve_scale(color='independent')
 chart_incidence = alt.vconcat(background + chart_incidence).resolve_scale(color='independent')
 
 
-#4. individual smaller plots
+
+
+
+#3.5 wolrd maps - RESISTANT cases
+source = alt.topo_feature(data.world_110m.url, 'countries')
+
+df1 = subset.groupby(['country'])['c_new_tsr'].mean().reset_index() #e_inc_num#Estimated number of incident cases (all forms)
+df2 = subset.groupby(['country'])['e_inc_num'].mean().reset_index() ##c_new_tsr ##Treatment success rate for all new cases (including relapse cases if rel_with_new_flg = 1), percent
+df3 = subset.groupby(['country'])['incidence_resistant'].mean().reset_index()
+df4 = subset.groupby(['country'])['success_rate_resistant'].mean().reset_index()
+
+df_mean = df1.merge(df2, on = 'country').merge(df3, on='country').merge(df4, on='country')
+df_mean = df_mean.merge(country_df[['country', 'country-code']], on='country')
+#df3 = df3[~((df3['c_new_tsr'].isna())|(df3['e_inc_num'].isna()))]
+
+    #base plot
+chart_base = alt.Chart(source
+    ).properties(
+        width=width,
+        height=height
+    ).project(project
+    ).add_selection(selector
+    ).transform_lookup(
+        lookup="id",
+        from_=alt.LookupData(df_mean, "country-code", ['country',"incidence_resistant", "success_rate_resistant"]),
+)
+
+# fix the color schema so that it will not change upon user selection
+rate_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_mean['incidence_resistant'].max()], scheme='oranges')
+rate_color = alt.Color(field="incidence_resistant", type="quantitative", scale=rate_scale)
+
+chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
+      color=alt.Color('incidence_resistant:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)",
+                      legend=alt.Legend(orient="bottom", direction="horizontal")),
+      tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="Treatment Success Rate")]
+    ).transform_filter(
+    selector
+    ).properties(
+    title=f'Average TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}'
+)
+
+# fix the color schema so that it will not change upon user selection
+population_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean['success_rate_resistant'].max()], scheme='yellowgreenblue')
+chart_incidence_resistant = chart_base.mark_geoshape().encode(
+      color=alt.Color('success_rate_resistant:Q', title= "cases per 100,000 population", legend=alt.Legend(orient="bottom", direction="horizontal")),
+      tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="cases per 100,000 population")]
+    ).transform_filter(
+    selector
+).properties(
+    title=f'Average Estimated TB Incidences Worldwide during {year_slider[0]} and {year_slider[1]}'
+)
+
+chart_treatmentrate_resistant = alt.vconcat(background + chart_treatmentrate_resistant).resolve_scale(color='independent')
+chart_incidence_resistant = alt.vconcat(background + chart_incidence_resistant).resolve_scale(color='independent')
+
+
+
+
+
+
+
+
+#4. individual smaller plots, all & resistant
 chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
@@ -153,16 +211,44 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
 )
 
 
+chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
+    x=alt.X('year:O'),
+    y=alt.Y("incidence_resistant:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['incidence_resistant'].min()-10, 100])),
+    color=alt.Color('country:N'),
+    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="TB Treatment Success Rate (%)")]
+).transform_filter(
+    selector
+).properties(
+    title=f'Yearly Trend of TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
+    width=width,
+    height=height
+)
+
+chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
+    x=alt.X('year:O'),
+    y=alt.Y("success_rate_resistant:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
+    color=alt.Color('country:N'),
+    tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="cases per 100,000 population")]
+).transform_filter(
+    selector
+).properties(
+    title=f'Yearly Trend of TB Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
+    width=width,
+    height=height
+)
 
 
 
 
 
 
+#5. combine all plots
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
 chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
+chart_top_resis = alt.hconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
 chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
-chart_all = chart_top & chart_bottom
+chart_bottom_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
+chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
 
 st.altair_chart(chart_all, use_container_width=True)
 
