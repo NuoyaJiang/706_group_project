@@ -214,7 +214,7 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
-    y=alt.Y("success_rate_resistant:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log')),#, domain=[subset['incidence_resistant'].min()-10, 100])),
+    y=alt.Y("success_rate_resistant:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log'), domain=[subset['incidence_resistant'].min()-10, 100])),
     color=alt.Color('country:N'),
     tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="TB Treatment Success Rate (%)")]
 ).transform_filter(
@@ -245,12 +245,12 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 #5. combine all plots
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
-chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
-chart_top_resis = alt.hconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
-chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
-chart_bottom_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
-chart_all = chart_top & chart_top_resis
-chart_all = chart_all & chart_bottom & chart_bottom_resis
+chart_bottom = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
+chart_bottom_resis = alt.hconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
+chart_top = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
+chart_top_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
+
+chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
 
 st.altair_chart(chart_all, use_container_width=True)
 
