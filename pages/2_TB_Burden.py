@@ -155,7 +155,7 @@ rate_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean[
 chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
       color=alt.Color('success_rate_resistant:Q', scale=rate_scale, title="Treatment Success Rate (%)",
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:T', alt.Tooltip("success_rate_resistant:Q", title="Treatment Success Rate")]
+      tooltip=['year:Q', alt.Tooltip("success_rate_resistant:Q", title="Treatment Success Rate")]
     ).transform_filter(
     selector
     ).properties(
@@ -167,7 +167,7 @@ population_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_me
 chart_incidence_resistant = chart_base.mark_geoshape().encode(
       color=alt.Color('incidence_resistant:Q', title= "cases per 100,000 population", scale=population_scale,
                        legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:T', alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
+      tooltip=['year:Q', alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
 ).properties(
