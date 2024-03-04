@@ -120,7 +120,7 @@ chart_incidence = alt.vconcat(background + chart_incidence).resolve_scale(color=
 
 #4. individual smaller plots
 chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
-    x=alt.X('year:T'),
+    x=alt.X('year:O'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
     color=alt.Color('country:N'),
     tooltip=['year:T', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)")]
@@ -133,7 +133,7 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
 )
 
 chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
-    x=alt.X('year:T'),
+    x=alt.X('year:O'),
     y=alt.Y("e_inc_num:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
     tooltip=['year:T', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
