@@ -97,8 +97,13 @@ rate_scale = alt.Scale(domain=[df_mean['c_new_tsr'].min(), df_mean['c_new_tsr'].
 rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
-      color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)"),
-      tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")]
+      color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)",
+                      legend=alt.Legend(orient="bottom", direction="horizontal")),
+      tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")],
+      size=alt.Size(
+            "incidence_resistant:Q",
+            scale=alt.Scale(type="pow", range=[1, 1000], domain=[0, 6], exponent=4),
+        )
     ).transform_filter(
     selector
     ).properties(
@@ -108,7 +113,7 @@ chart_treatmentrate = chart_base.mark_geoshape().encode(
 # fix the color schema so that it will not change upon user selection
 population_scale = alt.Scale(domain=[df_mean['e_inc_num'].min(), df_mean['e_inc_num'].max()], scheme='yellowgreenblue')
 chart_incidence = chart_base.mark_geoshape().encode(
-      color=alt.Color('e_inc_num:Q', title= "cases per 100,000 population"),
+      color=alt.Color('e_inc_num:Q', title= "cases per 100,000 population", legend=alt.Legend(orient="bottom", direction="horizontal")),
       tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
@@ -128,7 +133,7 @@ chart_incidence = alt.vconcat(background + chart_incidence).resolve_scale(color=
 chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[subset['c_new_tsr'].min()-10, 100])),
-    color=alt.Color('country:N'),
+    color=alt.Color('country:N', legend=alt.Legend(orient="bottom", direction="horizontal")),
     tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)")]
 ).transform_filter(
     selector
@@ -141,7 +146,7 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
 chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("e_inc_num:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
-    color=alt.Color('country:N'),
+    color=alt.Color('country:N', legend=alt.Legend(orient="bottom", direction="horizontal")),
     tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
 ).transform_filter(
     selector
