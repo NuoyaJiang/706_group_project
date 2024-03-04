@@ -151,10 +151,9 @@ chart_base = alt.Chart(source
 
 # fix the color schema so that it will not change upon user selection
 rate_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_mean['incidence_resistant'].max()], scheme='oranges')
-rate_color = alt.Color(field="incidence_resistant", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
-      color=alt.Color('incidence_resistant:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)",
+      color=alt.Color('incidence_resistant:Q', scale=rate_scale, title="Treatment Success Rate (%)",
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
       tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="Treatment Success Rate")]
     ).transform_filter(
@@ -166,7 +165,8 @@ chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
 # fix the color schema so that it will not change upon user selection
 population_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean['success_rate_resistant'].max()], scheme='yellowgreenblue')
 chart_incidence_resistant = chart_base.mark_geoshape().encode(
-      color=alt.Color('success_rate_resistant:Q', title= "cases per 100,000 population", legend=alt.Legend(orient="bottom", direction="horizontal")),
+      color=alt.Color('success_rate_resistant:Q', title= "cases per 100,000 population", scale=population_scale,
+                       legend=alt.Legend(orient="bottom", direction="horizontal")),
       tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
@@ -249,7 +249,8 @@ chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(col
 chart_top_resis = alt.hconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
 chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
 chart_bottom_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
-chart_all = chart_top & chart_bottom & chart_bottom_resis
+chart_all = chart_top & chart_top_resis
+chart_all = chart_all & chart_bottom & chart_bottom_resis
 
 st.altair_chart(chart_all, use_container_width=True)
 
