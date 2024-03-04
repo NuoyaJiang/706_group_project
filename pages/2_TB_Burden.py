@@ -150,12 +150,12 @@ chart_base = alt.Chart(source
 )
 
 # fix the color schema so that it will not change upon user selection
-rate_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_mean['incidence_resistant'].max()], scheme='oranges')
+rate_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean['success_rate_resistant'].max()], scheme='oranges')
 
 chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
-      color=alt.Color('incidence_resistant:Q', scale=rate_scale, title="Treatment Success Rate (%)",
+      color=alt.Color('success_rate_resistant:Q', scale=rate_scale, title="Treatment Success Rate (%)",
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="Treatment Success Rate")]
+      tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="Treatment Success Rate")]
     ).transform_filter(
     selector
     ).properties(
@@ -163,11 +163,11 @@ chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
 )
 
 # fix the color schema so that it will not change upon user selection
-population_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean['success_rate_resistant'].max()], scheme='yellowgreenblue')
+population_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_mean['incidence_resistant'].max()], scheme='yellowgreenblue')
 chart_incidence_resistant = chart_base.mark_geoshape().encode(
-      color=alt.Color('success_rate_resistant:Q', title= "cases per 100,000 population", scale=population_scale,
+      color=alt.Color('incidence_resistant:Q', title= "cases per 100,000 population", scale=population_scale,
                        legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="cases per 100,000 population")]
+      tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
 ).properties(
