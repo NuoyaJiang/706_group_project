@@ -45,7 +45,7 @@ subset['incidence_resistant'] = (subset['e_rr_pct_new'] + subset['e_rr_pct_ret']
 #mdr_coh #Outcomes for MDR-TB cases: cohort size
 #mdr_succ #Outcomes for MDR-TB cases: treatment success (Cured or treatment completed)
     ### 'mdr_succ' / 'mdr_coh' = treatment success rate for TB resistant patients
-subset['success_rate_resistant'] = subset['mdr_succ'] / subset['mdr_coh']
+subset['success_rate_resistant'] = subset['mdr_succ'] *100 / subset['mdr_coh']
 
 
 
@@ -214,9 +214,9 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
-    y=alt.Y("incidence_resistant:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log')),#, domain=[subset['incidence_resistant'].min()-10, 100])),
+    y=alt.Y("success_rate_resistant:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log')),#, domain=[subset['incidence_resistant'].min()-10, 100])),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="TB Treatment Success Rate (%)")]
+    tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="TB Treatment Success Rate (%)")]
 ).transform_filter(
     selector
 ).properties(
@@ -227,9 +227,9 @@ chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
-    y=alt.Y("success_rate_resistant:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
+    y=alt.Y("incidence_resistant:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="cases per 100,000 population")]
+    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
 ).transform_filter(
     selector
 ).properties(
