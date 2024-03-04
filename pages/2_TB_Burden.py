@@ -251,7 +251,6 @@ chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(
 chart_bottom_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
 chart_all = chart_top & chart_top_resis
 chart_all = chart_all & chart_bottom & chart_bottom_resis
-chart_all = chart_top_resis
 
 st.altair_chart(chart_all, use_container_width=True)
 
