@@ -249,7 +249,7 @@ chart_top = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(col
 chart_top_resis = alt.hconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
 chart_bottom = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
 chart_bottom_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
-chart_all = chart_top & chart_top_resis
+chart_all = chart_top 
 chart_all = chart_all & chart_bottom & chart_bottom_resis
 
 st.altair_chart(chart_all, use_container_width=True)
