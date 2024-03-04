@@ -96,7 +96,7 @@ chart_base = alt.Chart(source
 rate_scale = alt.Scale(domain=[df_mean['c_new_tsr'].min(), df_mean['c_new_tsr'].max()], scheme='oranges')
 rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
-chart_treatmentrate = chart_base.mark_geoshape().encode(
+chart_treatmentrate = chart_base.mark_circle(opacity=0.36).encode(
       color=alt.Color('c_new_tsr:Q', scale=alt.Scale(scheme='oranges'), title="Treatment Success Rate (%)",
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
       tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")],
