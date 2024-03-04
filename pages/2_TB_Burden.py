@@ -99,7 +99,7 @@ rate_scale = alt.Scale(domain=[df_mean['c_new_tsr'].min(), df_mean['c_new_tsr'].
 chart_treatmentrate = chart_base.mark_geoshape().encode(
       color=alt.Color('c_new_tsr:Q', scale=rate_scale, title="Treatment Success Rate (%)",
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")]
+      tooltip=[alt.Tooltip("c_new_tsr:Q", title="Treatment Success Rate")]
     ).transform_filter(
     selector
     ).properties(
@@ -111,7 +111,7 @@ population_scale = alt.Scale(domain=[df_mean['e_inc_num'].min(), df_mean['e_inc_
 chart_incidence = chart_base.mark_geoshape().encode(
       color=alt.Color('e_inc_num:Q', title= "cases per 100,000 population", scale = population_scale,
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
+      tooltip=[alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
 ).properties(
