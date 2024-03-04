@@ -214,7 +214,7 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
-    y=alt.Y("success_rate_resistant:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale(type='log', domain=[0.1, 100])),
+    y=alt.Y("success_rate_resistant:Q", title= 'TB Treatment Success Rate (%)', scale=alt.Scale( domain=[0.1, 100])),
     color=alt.Color('country:N'),
     tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="TB Treatment Success Rate (%)")]
 ).transform_filter(
