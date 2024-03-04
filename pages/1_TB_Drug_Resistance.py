@@ -100,7 +100,7 @@ chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(colo
 
 df2 = df[df["country"].isin(countries_options)][["country", "year","e_rr_pct_ret", "country-code"]]
 df2.columns = ["country", "year","drug-resistance-percentage", "country-code"]
-st.write(df2)
+#st.write(df2)
 
 chart_trend_rate = alt.Chart(df2).mark_line(point=True).encode(
     x=alt.X('year:O'),
