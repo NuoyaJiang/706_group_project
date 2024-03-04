@@ -259,6 +259,3 @@ countries_in_subset = df3["country"].unique()
 if len(countries_in_subset) != len(countries):
     if len(countries_in_subset) == 0:
         st.write("No data avaiable for given subset.")
-    else:
-        missing = set(countries) - set(countries_in_subset)
-        st.write("No data available for " + ", ".join(missing) + ".")
