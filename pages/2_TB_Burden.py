@@ -155,11 +155,11 @@ rate_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean[
 chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
       color=alt.Color('success_rate_resistant:Q', scale=rate_scale, title="Treatment Success Rate (%)",
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="Treatment Success Rate")]
+      tooltip=['year:T', alt.Tooltip("success_rate_resistant:Q", title="Treatment Success Rate")]
     ).transform_filter(
     selector
     ).properties(
-    title=f'Average TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}'
+    title=f'Average TB Resistant Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
 # fix the color schema so that it will not change upon user selection
@@ -167,11 +167,11 @@ population_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_me
 chart_incidence_resistant = chart_base.mark_geoshape().encode(
       color=alt.Color('incidence_resistant:Q', title= "cases per 100,000 population", scale=population_scale,
                        legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
+      tooltip=['year:T', alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
     ).transform_filter(
     selector
 ).properties(
-    title=f'Average Estimated TB Incidences Worldwide during {year_slider[0]} and {year_slider[1]}'
+    title=f'Average Estimated TB Resistant Incidences Worldwide during {year_slider[0]} and {year_slider[1]}'
 )
 
 chart_treatmentrate_resistant = alt.vconcat(background + chart_treatmentrate_resistant).resolve_scale(color='independent')
@@ -220,7 +220,7 @@ chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
+    title=f'Yearly Trend of TB Resistant Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=width,
     height=height
 )
@@ -233,7 +233,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of TB Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
+    title=f'Yearly Trend of TB Resistant Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=width,
     height=height
 )
