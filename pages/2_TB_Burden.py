@@ -107,11 +107,11 @@ chart_treatmentrate = chart_base.mark_geoshape().encode(
 )
 
 # fix the color schema so that it will not change upon user selection
-population_scale = alt.Scale(domain=[df_mean['e_inc_num'].min(), df_mean['e_inc_num'].max()], scheme='yellowgreenblue')
+population_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_mean['e_inc_num'].max()], scheme='yellowgreenblue')
 chart_incidence = chart_base.mark_geoshape().encode(
-      color=alt.Color('e_inc_num:Q', title= "cases per 100,000 population", scale = population_scale,
+      color=alt.Color('e_inc_num:Q', title= "TB cases", scale = population_scale,
                       legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=[alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
+      tooltip=[alt.Tooltip("e_inc_num:Q", title="TB cases")]
     ).transform_filter(
     selector
 ).properties(
@@ -163,11 +163,11 @@ chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
 )
 
 # fix the color schema so that it will not change upon user selection
-population_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_mean['incidence_resistant'].max()], scheme='yellowgreenblue')
+population_scale = alt.Scale(domain=[df_mean['incidence_resistant'].min(), df_mean['e_inc_num'].max()], scheme='yellowgreenblue')
 chart_incidence_resistant = chart_base.mark_geoshape().encode(
-      color=alt.Color('incidence_resistant:Q', title= "cases per 100,000 population", scale=population_scale,
+      color=alt.Color('incidence_resistant:Q', title= "TB cases", scale=population_scale,
                        legend=alt.Legend(orient="bottom", direction="horizontal")),
-      tooltip=[alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
+      tooltip=[alt.Tooltip("incidence_resistant:Q", title="TB cases")]
     ).transform_filter(
     selector
 ).properties(
@@ -200,9 +200,9 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
-    y=alt.Y("e_inc_num:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
+    y=alt.Y("e_inc_num:Q", title= 'TB Incidences', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="cases per 100,000 population")]
+    tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="TB cases")]
 ).transform_filter(
     selector
 ).properties(
@@ -227,9 +227,9 @@ chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
-    y=alt.Y("incidence_resistant:Q", title= 'TB Incidences (per 100,000 population)', scale=alt.Scale(type='log')),
+    y=alt.Y("incidence_resistant:Q", title= 'TB Incidences', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="cases per 100,000 population")]
+    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="TB cases")]
 ).transform_filter(
     selector
 ).properties(
