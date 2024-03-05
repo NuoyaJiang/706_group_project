@@ -40,7 +40,7 @@ subset = subset[subset["country"].isin(countries_options)]
 #e_rr_pct_new #Estimated percentage of new TB cases with rifampicin resistant TB
 #e_rr_pct_ret #Estimated percentage of previously treated TB cases with rifampicin resistant TB
     ### ('e_rr_pct_new' + 'e_rr_pct_ret') * 'e_inc_num' = TB resistant cases
-subset['incidence_resistant'] = (subset['e_rr_pct_new'] + subset['e_rr_pct_ret']) * subset['e_inc_num']
+subset['incidence_resistant'] = (subset['e_rr_pct_new'] + subset['e_rr_pct_ret']) * subset['e_inc_num'] / 100
 
 #mdr_coh #Outcomes for MDR-TB cases: cohort size
 #mdr_succ #Outcomes for MDR-TB cases: treatment success (Cured or treatment completed)
