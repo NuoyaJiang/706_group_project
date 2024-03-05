@@ -93,7 +93,7 @@ chart_base = alt.Chart(source
 )
 
 # fix the color schema so that it will not change upon user selection
-rate_scale = alt.Scale(domain=[df_mean['c_new_tsr'].min(), df_mean['c_new_tsr'].max()], scheme='oranges')
+rate_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean['c_new_tsr'].max()], scheme='oranges')
 #rate_color = alt.Color(field="c_new_tsr", type="quantitative", scale=rate_scale)
 
 chart_treatmentrate = chart_base.mark_geoshape().encode(
@@ -150,7 +150,7 @@ chart_base = alt.Chart(source
 )
 
 # fix the color schema so that it will not change upon user selection
-rate_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean['success_rate_resistant'].max()], scheme='oranges')
+rate_scale = alt.Scale(domain=[df_mean['success_rate_resistant'].min(), df_mean['c_new_tsr'].max()], scheme='oranges')
 
 chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
       color=alt.Color('success_rate_resistant:Q', scale=rate_scale, title="Treatment Success Rate (%)",
