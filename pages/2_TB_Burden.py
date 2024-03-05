@@ -13,7 +13,7 @@ st.set_page_config(
 
 @st.cache(allow_output_mutation=True)
 def load_data():
-    df = pd.read_pickle("data/mtb_cleaned_data.pkl")
+    df = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
     country_df = pd.read_csv('https://raw.githubusercontent.com/hms-dbmi/bmi706-2022/main/cancer_data/country_codes.csv', dtype = {'conuntry-code': str})
     return df, country_df
 
