@@ -48,7 +48,7 @@ corr_mat['Corr'] = corr_mat['Corr'].round(2)
 corrplot = alt.Chart(corr_mat).mark_bar().encode(
     x=alt.X("Expenditure:N", title=""),
     color=alt.Color("Corr:Q", title="Correlation").scale(scheme='blueorange'),
-    y=alt.Y("TB Burden:N"),
+    y=alt.Y("TB Burden:N", title=""),
     tooltip=["Corr:Q"],
 ).configure_axis(
         titleFontSize=14,
