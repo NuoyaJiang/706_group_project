@@ -278,8 +278,6 @@ barplot = alt.Chart(bar_data).mark_bar().encode(
     y=alt.Y("Success Rate:Q"),
     color=alt.Color('Type:N'),
     tooltip=['Success Rate:Q']
-).transform_filter(
-    selector
 )
 
 st.altair_chart(barplot, use_container_width=True)
