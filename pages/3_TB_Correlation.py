@@ -37,7 +37,7 @@ subset.columns = ['Percent of New Resistant Cases',
 x_options = st.multiselect('Select X dimension', options=subset.columns[6:], default=subset.columns[6:])
 y_options = st.multiselect('Select Y dimension', options=subset.columns[0:6], default=subset.columns[0:6])
 
-corr_mat = subset.corr()[x_options,y_options]
+corr_mat = subset.corr().loc[x_options,y_options]
 
 corr_mat = corr_mat.reset_index()
 
