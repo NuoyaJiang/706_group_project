@@ -189,7 +189,7 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)'),#, scale=alt.Scale(domain=[10, 100])),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)"), , 'country']
+    tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)"), 'country']
 ).transform_filter(
     selector
 ).properties(
