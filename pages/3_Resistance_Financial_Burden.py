@@ -59,8 +59,8 @@ x_option = st.selectbox('Select Burden', subset.columns[0:2], index=0)
 y_option = st.selectbox('Select Expenditure', subset.columns[2:], index=0)
 
 scatterplot = alt.Chart(subset).mark_point().encode(
-    y=alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}")),
-    x=alt.X(x_option, title=x_option, scale=alt.Scale(type='sqrt')),
+    y=alt.Y(y_option, title=y_option, scale=alt.Scale(type='sqrt')),
+    x=alt.X(x_option, title=x_option),
 )
 
 lineplot = scatterplot.transform_regression(x_option, y_option).mark_line()
