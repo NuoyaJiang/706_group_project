@@ -91,7 +91,7 @@ chart_resistance = chart_base.mark_geoshape().encode(
     ).transform_filter(
     selector
     ).properties(
-    title=f'Average TB Treatment Success Rate Worldwide in {year}'
+    title=f'Average TB Drug Resistance Percentage Worldwide in {year}'
 )
 
 
