@@ -116,7 +116,7 @@ chart_trend_rate = alt.Chart(df2).mark_line(point=True).encode(
 )
 
 chart_all = alt.vconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
-st.altair_chart(chart_all, use_container_width=True)
+#st.altair_chart(chart_all, use_container_width=True)
 
 ############################################################################################################
 
@@ -224,7 +224,8 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 # chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
 
-chart_all = alt.vconcat(chart_trend_incident, chart_trend_incident_resis).resolve_scale(color='independent')
+chart_all2 = alt.vconcat(chart_trend_incident, chart_trend_incident_resis).resolve_scale(color='independent')
+chart_all = chart_all & chart_all2
 
 st.altair_chart(chart_all, use_container_width=True)
 
