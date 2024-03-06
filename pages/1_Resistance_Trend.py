@@ -156,12 +156,7 @@ subset = subset[subset["country"].isin(countries_options)]
     ### ('e_rr_pct_new' + 'e_rr_pct_ret') * 'e_inc_num' = TB resistant cases
 subset['incidence_resistant'] = (subset['e_rr_pct_new'] + subset['e_rr_pct_ret']) * subset['e_inc_num'] / 100
 
-#mdr_coh #Outcomes for MDR-TB cases: cohort size
-#mdr_succ #Outcomes for MDR-TB cases: treatment success (Cured or treatment completed)
-    ### 'mdr_succ' / 'mdr_coh' = treatment success rate for TB resistant patients
-subset['success_rate_resistant'] = subset['mdr_succ'] *100 / subset['mdr_coh']
-
-
+st.write(subset)
 
 
 #4. individual smaller plots, all & resistant
@@ -199,17 +194,9 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 
 #5. combine all plots
-#chart_all = chart_maps & chart_trend_rate & chart_trend_incident
-#chart_bottom = alt.vconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
-#chart_bottom_resis = alt.vconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
-#chart_top = alt.vconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
-#chart_top_resis = alt.vconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
-
-# chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
-
 chart_all2 = alt.vconcat(chart_trend_incident, chart_trend_incident_resis).resolve_scale(color='independent')
 
-st.altair_chart(chart_trend_incident_resis, use_container_width=True)
+st.altair_chart(chart_all2, use_container_width=True)
 
 
 
