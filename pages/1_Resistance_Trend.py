@@ -85,17 +85,17 @@ chart_base = alt.Chart(source
 rate_scale = alt.Scale(domain=[df1['drug-resistance-percentage'].min(), df1['drug-resistance-percentage'].max()], scheme='oranges')
 rate_color = alt.Color(field="drug-resistance-percentage", type="quantitative", scale=rate_scale)
 
-# chart_resistance = chart_base.mark_geoshape().encode(
-#       color=alt.Color('drug-resistance-percentage:Q', scale=alt.Scale(scheme='oranges'), title="Drug resistance percentage (%)"),
-#       tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="R percentage")]
-#     ).transform_filter(
-#     selector
-#     ).properties(
-#     title=f'Average TB Treatment Success Rate Worldwide in {year}'
-# )
+chart_resistance = chart_base.mark_geoshape().encode(
+      color=alt.Color('drug-resistance-percentage:Q', scale=alt.Scale(scheme='oranges'), title="Drug resistance percentage (%)"),
+      tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="R percentage")]
+    ).transform_filter(
+    selector
+    ).properties(
+    title=f'Average TB Treatment Success Rate Worldwide in {year}'
+)
 
 
-# chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
+chart_resistance = alt.vconcat(background + chart_resistance).resolve_scale(color='independent')
 #st.altair_chart(chart_resistance, use_container_width=True)
 
 df2 = df[df["country"].isin(countries_options)][["country", "year","e_rr_pct_ret", "country-code"]]
@@ -115,9 +115,9 @@ chart_trend_rate = alt.Chart(df2).mark_line(point=True).encode(
     height=height
 )
 
-# chart_all = alt.vconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
-# st.altair_chart(chart_all, use_container_width=True)
-st.altair_chart(chart_trend_rate, use_container_width=True)
+chart_all = alt.vconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
+st.altair_chart(chart_all, use_container_width=True)
+# st.altair_chart(chart_trend_rate, use_container_width=True)
 
 
 
