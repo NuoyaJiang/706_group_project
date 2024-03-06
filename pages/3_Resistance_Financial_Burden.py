@@ -48,7 +48,7 @@ corr_mat['Corr'] = corr_mat['Corr'].round(2)
 corrplot = alt.Chart(corr_mat).mark_bar().encode(
     x=alt.X("Expenditure:N", title=""),
     color=alt.Color("Corr:Q", title="Correlation").scale(scheme='blueorange'),
-    y=alt.Y("TB Burden:N"),
+    y=alt.Y("TB Burden:N", title=""),
     tooltip=["Corr:Q"],
 ).configure_axis(
         titleFontSize=14,
@@ -57,8 +57,8 @@ corrplot = alt.Chart(corr_mat).mark_bar().encode(
 
 st.altair_chart(corrplot, use_container_width=True)
 
-y_option = st.selectbox('Select Expenditure', subset.columns[4:], index=1)
-x_option = st.selectbox('Select Burden', subset.columns[0:4], index=3)
+y_option = st.selectbox('Select Expenditure', subset.columns[4:], index=6)
+x_option = st.selectbox('Select Burden', subset.columns[0:4], index=0)
 
 scatterplot = alt.Chart(subset).mark_point().encode(
     y=alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}")),
