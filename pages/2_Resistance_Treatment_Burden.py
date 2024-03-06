@@ -7,7 +7,7 @@ import altair as alt
 from vega_datasets import data
 
 st.set_page_config(
-    page_title="TB Drug Burden",
+    page_title="Treatment Burden",
     page_icon="🦠",
 )
 
@@ -22,8 +22,8 @@ country_df['country'] = country_df['Country']
 df = df.merge(country_df[['country', 'country-code']], on='country')
 
 #1. slider to choose year
-st.write("## Visualize the temporal trend of TB burden across different countries")
-st.sidebar.header("TB Burden")
+st.write("## Visualize the temporal trend of resistance treatment burden across different countries")
+st.sidebar.header("Treatment Burden")
 year_min = df["year"].min()
 year_max = df["year"].max()
 year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year_min, year_max, (year_min, year_max))

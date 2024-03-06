@@ -6,13 +6,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 st.set_page_config(
-    page_title="TB Correlation",
+    page_title="Financial Burden",
     page_icon="🦠",
 )
 
-st.sidebar.header("TB Correlation")
+st.sidebar.header("Financial Burden")
 
-st.write("# TB Correlation")
+st.write("# Financial Burden")
 
 data = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
 subset = data[["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist', 
