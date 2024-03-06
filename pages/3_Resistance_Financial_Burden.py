@@ -61,7 +61,7 @@ st.altair_chart(corrplot, use_container_width=True)
 st.write("### Relationship of Financial Expenditure and Resistance Percentage")
 
 x_option = st.selectbox('Select Burden', subset.columns[0:2], index=0)
-y_option = st.selectbox('Select Expenditure', subset.columns[2:], index=0)
+y_option = st.selectbox('Select Expenditure', subset.columns[2:], index=6)
 
 scatterplot = alt.Chart(subset).mark_point().encode(
     y=alt.Y(y_option, title=y_option, scale=alt.Scale(type='sqrt')),
