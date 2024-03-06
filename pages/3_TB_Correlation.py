@@ -64,7 +64,7 @@ scatterplot = alt.Chart(subset).mark_point().encode(
         labelLimit=0
 )
 
-scatterplot + scatterplot.transform_regression(x_option, y_option).mark_line()
+scatterplot = scatterplot + scatterplot.transform_regression(x_option, y_option).mark_line()
 
 st.altair_chart(scatterplot, use_container_width=True)
 
