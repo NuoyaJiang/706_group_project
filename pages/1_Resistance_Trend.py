@@ -116,7 +116,7 @@ chart_trend_rate = alt.Chart(df2).mark_line(point=True).encode(
 )
 
 chart_all = alt.vconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
-st.altair_chart(chart_all, use_container_width=True)
+#st.altair_chart(chart_all, use_container_width=True)
 
 countries_in_subset = df1["country"].unique()
 if len(countries_in_subset) != len(countries):
@@ -165,18 +165,6 @@ subset['success_rate_resistant'] = subset['mdr_succ'] *100 / subset['mdr_coh']
 
 
 #4. individual smaller plots, all & resistant
-chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
-    x=alt.X('year:O'),
-    y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)'),#, scale=alt.Scale(domain=[10, 100])),
-    color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)")]
-).transform_filter(
-    selector
-).properties(
-    title=f'Yearly Trend of TB Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
-    width=width,
-    height=height
-)
 
 chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
@@ -191,19 +179,6 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     height=height
 )
 
-
-chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
-    x=alt.X('year:O'),
-    y=alt.Y("success_rate_resistant:Q", title= 'TB Treatment Success Rate (%)'),#, scale=alt.Scale( domain=[10, 100])),
-    color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="TB Treatment Success Rate (%)")]
-).transform_filter(
-    selector
-).properties(
-    title=f'Yearly Trend of TB *Resistant* Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
-    width=width,
-    height=height
-)
 
 chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
@@ -232,7 +207,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 # chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
 
-chart_all2 = alt.vconcat(chart_trend_rate, chart_trend_rate_resis).resolve_scale(color='independent')
+chart_all2 = alt.vconcat(chart_trend_incident, chart_trend_incident_resis).resolve_scale(color='independent')
 
 st.altair_chart(chart_all2, use_container_width=True)
 
