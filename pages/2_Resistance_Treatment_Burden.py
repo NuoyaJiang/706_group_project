@@ -189,7 +189,7 @@ chart_trend_rate = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("c_new_tsr:Q", title= 'TB Treatment Success Rate (%)'),#, scale=alt.Scale(domain=[10, 100])),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)")]
+    tooltip=['year:O', alt.Tooltip("c_new_tsr:Q", title="TB Treatment Success Rate (%)"), 'country:N']
 ).transform_filter(
     selector
 ).properties(
@@ -202,7 +202,7 @@ chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("e_inc_num:Q", title= 'TB Incidences', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="TB cases")]
+    tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="TB cases"), 'country:N']
 ).transform_filter(
     selector
 ).properties(
@@ -216,7 +216,7 @@ chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("success_rate_resistant:Q", title= 'TB Treatment Success Rate (%)'),#, scale=alt.Scale( domain=[10, 100])),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="TB Treatment Success Rate (%)")]
+    tooltip=['year:O', alt.Tooltip("success_rate_resistant:Q", title="TB Treatment Success Rate (%)"), 'country:N']
 ).transform_filter(
     selector
 ).properties(
@@ -229,7 +229,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
     x=alt.X('year:O'),
     y=alt.Y("incidence_resistant:Q", title= 'TB Incidences', scale=alt.Scale(type='log')),
     color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="TB cases")]
+    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="TB cases"), 'country:N']
 ).transform_filter(
     selector
 ).properties(
