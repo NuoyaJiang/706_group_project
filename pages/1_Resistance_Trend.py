@@ -67,7 +67,7 @@ background = alt.Chart(source
 ).project(project)
 
     #*******create a selector to link map visualization w/ later visualizations
-selector = alt.selection_single(
+selector = alt.selection_point(
     fields=['country']
 )
     #base plot
@@ -76,7 +76,7 @@ chart_base = alt.Chart(source
         width=width,
         height=height
     ).project(project
-    ).add_selection(selector
+    ).add_params(selector
     ).transform_lookup(
         lookup="id",
         from_=alt.LookupData(df1, "country-code", ['country',"drug-resistance-percentage"]),
