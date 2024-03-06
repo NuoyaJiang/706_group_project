@@ -110,14 +110,13 @@ chart_trend_rate = alt.Chart(df2).mark_line(point=True).encode(
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of Drug resistance percentage Worldwide in from 2018 to 2021',
+    title=f'Yearly Trend of Drug Resistance Percentage Worldwide in from 2018 to 2021',
     width=width,
     height=height
 )
 
 chart_all = alt.vconcat(chart_resistance, chart_trend_rate).resolve_scale(color='independent')
 st.altair_chart(chart_all, use_container_width=True)
-# st.altair_chart(chart_trend_rate, use_container_width=True)
 
 
 
