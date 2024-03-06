@@ -220,7 +220,7 @@ chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of TB *Resistant* Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
+    title=f'Yearly Trend of TB **Resistant** Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=width,
     height=height
 )
@@ -233,7 +233,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of TB **Resistant** Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
+    title=f'Yearly Trend of TB *Resistant* Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=width,
     height=height
 )
