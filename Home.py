@@ -22,7 +22,7 @@ st.markdown(
 """
 )
 
-st.markdown(f"In this project, we visualize <a href={home_url+'/Resistance_Trend'} target={target}>its rising trend in drug resistance</a>, <a href={home_url+'/Resistance_Treatment_Burden'} target={target}>the burden caused by drug resistance</a>, and <a href={home_url+'/Resistance_Financial_Burden'} target={target}>socioeconomic factors that may help us hamper the trend</a> with data from [WHO Global Tuberculosis Programme](https://www.who.int/teams/global-tuberculosis-programme/data). We hope our efforts could raise more awareness of the issue.", unsafe_allow_html=True)
+st.markdown(f"In this project, we visualize <a href={home_url+'/Resistance_Trend'} target={target}>its rising trend in drug resistance</a>, <a href={home_url+'/Resistance_Treatment_Burden'} target={target}>the treatment burden caused by drug resistance</a>, as well as <a href={home_url+'/Resistance_Financial_Burden'} target={target}>financial burden caused by resistance</a> with data from [WHO Global Tuberculosis Programme](https://www.who.int/teams/global-tuberculosis-programme/data). We hope our efforts could raise more awareness of the issue.", unsafe_allow_html=True)
 
 st.image('images/tuberculosis.jpeg', caption='Spread of Tuberculosis')
 
