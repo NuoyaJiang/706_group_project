@@ -104,7 +104,7 @@ df2.columns = ["country", "year","drug-resistance-percentage", "country-code"]
 
 chart_trend_rate = alt.Chart(df2).mark_line(point=True).encode(
     x=alt.X('year:O'),
-    y=alt.Y("drug-resistance-percentage:Q", title= 'TB drug resistance percentage (%)', scale=alt.Scale(type='linear', domain=[0, 100])),
+    y=alt.Y("drug-resistance-percentage:Q", title= 'Percentage (%)', scale=alt.Scale(type='linear', domain=[0, 100])),
     color=alt.Color('country:N'),
     tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="Percentage (%)")]
 ).transform_filter(
