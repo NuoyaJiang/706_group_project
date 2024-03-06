@@ -156,47 +156,10 @@ subset = subset[subset["country"].isin(countries_options)]
     ### ('e_rr_pct_new' + 'e_rr_pct_ret') * 'e_inc_num' = TB resistant cases
 subset['incidence_resistant'] = (subset['e_rr_pct_new'] + subset['e_rr_pct_ret']) * subset['e_inc_num'] / 100
 
-st.write(subset)
-
 
 #4. individual smaller plots, all & resistant
 
-chart_trend_incident = alt.Chart(subset).mark_line(point=True).encode(
-    x=alt.X('year:O'),
-    y=alt.Y("e_inc_num:Q", title= 'TB Incidences', scale=alt.Scale(type='log')),
-    color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("e_inc_num:Q", title="TB cases")]
-).transform_filter(
-    selector
-).properties(
-    title=f'Yearly Trend of TB Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
-    width=width,
-    height=height
-)
 
-
-chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
-    x=alt.X('year:O'),
-    y=alt.Y("incidence_resistant:Q", title= 'TB Incidences', scale=alt.Scale(type='log')),
-    color=alt.Color('country:N'),
-    tooltip=['year:O', alt.Tooltip("incidence_resistant:Q", title="TB cases")]
-).transform_filter(
-    selector
-).properties(
-    title=f'Yearly Trend of TB *Resistant* Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
-    width=width,
-    height=height
-)
-
-
-
-
-
-
-#5. combine all plots
-chart_all2 = alt.vconcat(chart_trend_incident, chart_trend_incident_resis).resolve_scale(color='independent')
-
-st.altair_chart(chart_all2, use_container_width=True)
 
 
 
