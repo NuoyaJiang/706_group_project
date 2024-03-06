@@ -12,7 +12,7 @@ st.set_page_config(
 
 st.markdown("# Resistance Trend")
 
-st.sidebar.header("Resistance Trend")
+#st.sidebar.header("Resistance Trend")
 st.write(
     """This page illustrates the Trend of TB Worldwide Drug Resistance from 2018 to 2021"""
 )
