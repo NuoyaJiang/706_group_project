@@ -245,8 +245,8 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 #5. combine all plots
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
-chart_bottom = alt.hconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
-chart_bottom_resis = alt.hconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
+chart_bottom = alt.vconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
+chart_bottom_resis = alt.vconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
 # chart_top = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
 # chart_top_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
 
