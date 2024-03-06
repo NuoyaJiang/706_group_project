@@ -258,6 +258,8 @@ chart_all = chart_bottom & chart_bottom_resis
 st.altair_chart(chart_all, use_container_width=True)
 
 # Bar
+st.write("### Difference in Treatment Success Rate of Resistant and Non-resistant Patients")
+
 df_bar = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
 year_bar = st.slider('Select a year', min_value=int(df_bar['year'].min()), max_value=int(df_bar['year'].max()), value=2019, step=1)
 
