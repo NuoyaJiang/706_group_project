@@ -59,12 +59,19 @@ y_option = st.selectbox('Select Y dimension', subset.columns[0:6])
 scatterplot = alt.Chart(subset).mark_point().encode(
     y=alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}")),
     x=alt.X(x_option, title=x_option, scale=alt.Scale(type='sqrt')),
+)
+
+lineplot = scatterplot.transform_regression(x_option, y_option).mark_line()
+
+chart = alt.layer(scatterplot, lineplot).configure_view(
+    stroke='transparent'
 ).configure_axis(
         titleFontSize=14,
         labelLimit=0
 )
 
-scatterplot = scatterplot + scatterplot.transform_regression(x_option, y_option).mark_line()
 
-st.altair_chart(scatterplot, use_container_width=True)
+
+
+st.altair_chart(chart, use_container_width=True)
 
