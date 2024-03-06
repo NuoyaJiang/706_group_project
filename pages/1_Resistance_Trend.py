@@ -209,7 +209,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 chart_all2 = alt.vconcat(chart_trend_incident, chart_trend_incident_resis).resolve_scale(color='independent')
 
-st.altair_chart(chart_trend_incident, use_container_width=True)
+st.altair_chart(chart_trend_incident_resis, use_container_width=True)
 
 
 
