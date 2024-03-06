@@ -353,15 +353,15 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
 #chart_bottom = alt.vconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
 #chart_bottom_resis = alt.vconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
-#chart_top = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
-#chart_top_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
+chart_top = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
+chart_top_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
 
 # chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
 
-chart_all = chart_trend_incident
+chart_all = chart_top & chart_top_resis
 
 
-st.altair_chart(chart_trend_incident, use_container_width=True)
+st.altair_chart(chart_all, use_container_width=True)
 
 
 countries_in_subset = df3["country"].unique()
