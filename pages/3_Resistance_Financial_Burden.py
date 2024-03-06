@@ -14,6 +14,9 @@ st.sidebar.header("Financial Burden")
 
 st.write("# Financial Burden")
 
+
+st.write("## Correlation of Financial Expenditure and Resistance Percentage")
+
 data = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
 subset = data[["e_rr_pct_new", "e_rr_pct_ret",
                "exp_cpp_dstb", "exp_cpp_mdr", "exp_lab","exp_orsrvy","exp_oth", 
@@ -55,6 +58,8 @@ corrplot = alt.Chart(corr_mat).mark_bar().encode(
 
 st.altair_chart(corrplot, use_container_width=True)
 
+st.write("## Relationship of Financial Expenditure and Resistance Percentage")
+
 x_option = st.selectbox('Select Burden', subset.columns[0:2], index=0)
 y_option = st.selectbox('Select Expenditure', subset.columns[2:], index=0)
 
@@ -74,6 +79,10 @@ chart = alt.layer(scatterplot, lineplot).configure_view(
 
 
 st.altair_chart(chart, use_container_width=True)
+
+st.write("## Difference in Cost in First- and Second-Line Treatment")
+
+st.write("First-Line treatment is for normal patients, while Second-Line for resistant patients.")
 
 
 # Bar
