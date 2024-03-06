@@ -129,7 +129,7 @@ df = df.merge(country_df[['country', 'country-code']], on='country')
 
 #1. slider to choose year
 st.write("Visualize the temporal trend of resistance incidence across different countries")
-st.sidebar.header("Treatment Burden")
+#st.sidebar.header("Treatment Burden")
 year_min = df["year"].min()
 year_max = df["year"].max()
 year_slider = st.slider('A) Slide the bar to choose year range of viewing:',year_min, year_max, (year_min, year_max))
@@ -353,8 +353,8 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 #chart_all = chart_maps & chart_trend_rate & chart_trend_incident
 #chart_bottom = alt.vconcat(chart_treatmentrate, chart_trend_rate).resolve_scale(color='independent')
 #chart_bottom_resis = alt.vconcat(chart_treatmentrate_resistant, chart_trend_rate_resis).resolve_scale(color='independent')
-chart_top = alt.hconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
-chart_top_resis = alt.hconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
+chart_top = alt.vconcat(chart_incidence, chart_trend_incident).resolve_scale(color='independent')
+chart_top_resis = alt.vconcat(chart_incidence_resistant, chart_trend_incident_resis).resolve_scale(color='independent')
 
 # chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
 
