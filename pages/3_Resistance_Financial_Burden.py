@@ -34,8 +34,8 @@ subset.columns = ['Percent of New Resistant Cases',
 
 # subset.iloc[:, 4:] = subset.iloc[:, 4:].apply(np.sqrt)
 
-x_options = st.multiselect('Select Expenditure', options=subset.columns[6:], default=subset.columns[6:].tolist())
-y_options = st.multiselect('Select Burden', options=subset.columns[0:6], default=subset.columns[0:6].tolist())
+y_options = st.multiselect('Select Expenditure', options=subset.columns[4:], default=subset.columns[4:].tolist())
+x_options = st.multiselect('Select Burden', options=subset.columns[0:4], default=subset.columns[0:4].tolist())
 
 corr_mat = subset.corr().loc[x_options,y_options]
 
@@ -57,8 +57,8 @@ corrplot = alt.Chart(corr_mat).mark_bar().encode(
 
 st.altair_chart(corrplot, use_container_width=True)
 
-x_option = st.selectbox('Select Expenditure', subset.columns[6:], index=1)
-y_option = st.selectbox('Select Burden', subset.columns[0:6], index=3)
+y_option = st.selectbox('Select Expenditure', subset.columns[4:], index=1)
+x_option = st.selectbox('Select Burden', subset.columns[0:4], index=3)
 
 scatterplot = alt.Chart(subset).mark_point().encode(
     y=alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}")),
