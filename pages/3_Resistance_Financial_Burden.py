@@ -15,7 +15,7 @@ st.sidebar.header("Financial Burden")
 st.write("# Financial Burden")
 
 data = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
-subset = data[["e_rr_pct_new", "e_rr_pct_ret", 'c_new_tsr', 'c_tsr_resist', 
+subset = data[["e_rr_pct_new", "e_rr_pct_ret",
                "exp_cpp_dstb", "exp_cpp_mdr", "exp_lab","exp_orsrvy","exp_oth", 
                "exp_patsup", "exp_staff", 'exp_tpt']]
 
