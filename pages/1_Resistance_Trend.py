@@ -358,7 +358,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 
 # chart_all = chart_top & chart_top_resis & chart_bottom & chart_bottom_resis
 
-chart_all = chart_trend_incident & chart_trend_incident_resis
+chart_all = chart_trend_incident
 
 
 st.altair_chart(chart_all, use_container_width=True)
