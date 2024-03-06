@@ -78,7 +78,7 @@ st.altair_chart(chart, use_container_width=True)
 
 # Bar
 df_bar_f = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
-year_bar_f = st.slider('Select a year', min_value=int(df_bar['year'].min()), max_value=int(df_bar['year'].max()), value=2019, step=1)
+year_bar_f = st.slider('Select a year', min_value=int(df_bar_f['year'].min()), max_value=int(df_bar_f['year'].max()), value=2019, step=1)
 
 countries_bar_f = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil"]
 countries_options_bar_f = st.multiselect(
