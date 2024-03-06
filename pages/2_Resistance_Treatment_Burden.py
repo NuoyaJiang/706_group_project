@@ -258,8 +258,17 @@ chart_all = chart_bottom & chart_bottom_resis
 st.altair_chart(chart_all, use_container_width=True)
 
 # Bar
-year_bar = st.slider('Select a year', min_value=int(df['year'].min()), max_value=int(df['year'].max()), value=2019, step=1)
-bar_data = df[['country', 'year', 'c_tsr_resist', 'c_new_tsr']]
+df_bar = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
+year_bar = st.slider('Select a year', min_value=int(df_bar['year'].min()), max_value=int(df_bar['year'].max()), value=2019, step=1)
+
+countries_bar = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil"]
+countries_options_bar = st.multiselect(
+    "B) Choose countries to view:",
+    df_bar['country'].unique().tolist(),
+    countries_bar
+)
+bar_data = df_bar[df_bar["country"].isin(countries_options_bar)]
+bar_data = bar_data[['country', 'year', 'c_tsr_resist', 'c_new_tsr']]
 bar_data = bar_data.query('year == @year_bar')
 bar_data.columns = ['country', 'year', 'resistant', 'non-resistant']
 bar_data = pd.melt(bar_data, id_vars=['country', 'year'], value_name="Success Rate", var_name="Type")
