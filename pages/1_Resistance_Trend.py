@@ -128,7 +128,7 @@ country_df['country'] = country_df['Country']
 df = df.merge(country_df[['country', 'country-code']], on='country')
 
 #1. slider to choose year
-st.write("## Visualize the temporal trend of resistance treatment burden across different countries")
+st.write("Visualize the temporal trend of resistance incidence across different countries")
 st.sidebar.header("Treatment Burden")
 year_min = df["year"].min()
 year_max = df["year"].max()
