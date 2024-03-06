@@ -159,7 +159,7 @@ chart_treatmentrate_resistant = chart_base.mark_geoshape().encode(
     ).transform_filter(
     selector
     ).properties(
-    title=f'Average TB *Resistant* Treatment Success Rate during {year_slider[0]} and {year_slider[1]}'
+    title=f'Average TB Resistant Treatment Success Rate during {year_slider[0]} and {year_slider[1]}'
 )
 
 # fix the color schema so that it will not change upon user selection
@@ -171,7 +171,7 @@ chart_incidence_resistant = chart_base.mark_geoshape().encode(
     ).transform_filter(
     selector
 ).properties(
-    title=f'Average Estimated TB *Resistant* Incidences during {year_slider[0]} and {year_slider[1]}'
+    title=f'Average Estimated TB Resistant Incidences during {year_slider[0]} and {year_slider[1]}'
 )
 
 chart_treatmentrate_resistant = alt.vconcat(background + chart_treatmentrate_resistant).resolve_scale(color='independent')
@@ -220,7 +220,7 @@ chart_trend_rate_resis = alt.Chart(subset).mark_line(point=True).encode(
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of TB *Resistant* Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
+    title=f'Yearly Trend of TB Resistant Treatment Success Rate Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=width,
     height=height
 )
@@ -233,7 +233,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 ).transform_filter(
     selector
 ).properties(
-    title=f'Yearly Trend of TB *Resistant* Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
+    title=f'Yearly Trend of TB Resistant Incidence Cases Worldwide during {year_slider[0]} and {year_slider[1]}',
     width=width,
     height=height
 )
