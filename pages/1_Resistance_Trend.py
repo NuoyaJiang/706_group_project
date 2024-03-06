@@ -10,7 +10,7 @@ st.set_page_config(
     page_icon="🦠",
 )
 
-st.markdown("#Resistance Trend")
+st.markdown("# Resistance Trend")
 
 st.sidebar.header("Resistance Trend")
 st.write(
