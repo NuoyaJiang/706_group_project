@@ -259,7 +259,7 @@ st.altair_chart(chart_all, use_container_width=True)
 
 # Bar
 year_bar = st.slider('Select a year', min_value=int(df['year'].min()), max_value=int(df['year'].max()), value=2019, step=1)
-bar_data = df[['country', 'year', 'success_rate_resistant', 'c_new_tsr']]
+bar_data = df[['country', 'year', 'c_tsr_resist', 'c_new_tsr']]
 bar_data = bar_data.query('year == @year_bar')
 bar_data.columns = ['country', 'year', 'resistant', 'non-resistant']
 bar_data = pd.melt(bar_data, id_vars=['country', 'year'], value_name="Success Rate", var_name="Type")
