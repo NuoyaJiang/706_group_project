@@ -76,7 +76,7 @@ chart_base = alt.Chart(source
         width=width,
         height=height
     ).project(project
-    ).add_param(selector
+    ).add_selection(selector
     ).transform_lookup(
         lookup="id",
         from_=alt.LookupData(df1, "country-code", ['country',"drug-resistance-percentage"]),
