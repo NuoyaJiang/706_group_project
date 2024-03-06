@@ -86,8 +86,8 @@ rate_scale = alt.Scale(domain=[df1['drug-resistance-percentage'].min(), df1['dru
 rate_color = alt.Color(field="drug-resistance-percentage", type="quantitative", scale=rate_scale)
 
 chart_resistance = chart_base.mark_geoshape().encode(
-      color=alt.Color('drug-resistance-percentage:Q', scale=alt.Scale(scheme='oranges'), title="Drug resistance percentage (%)"),
-      tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="R percentage")]
+      color=alt.Color('drug-resistance-percentage:Q', scale=alt.Scale(scheme='oranges'), title="Percentage (%)"),
+      tooltip=['year:T', alt.Tooltip("drug-resistance-percentage:Q", title="Percentage")]
     ).transform_filter(
     selector
     ).properties(
