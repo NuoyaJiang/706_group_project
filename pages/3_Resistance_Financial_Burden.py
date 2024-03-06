@@ -73,7 +73,30 @@ chart = alt.layer(scatterplot, lineplot).configure_view(
 )
 
 
-
-
 st.altair_chart(chart, use_container_width=True)
 
+
+# Bar
+df_bar_f = pd.read_pickle("data/mtb_cleaned_data_new.pkl")
+year_bar_f = st.slider('Select a year', min_value=int(df_bar['year'].min()), max_value=int(df_bar['year'].max()), value=2019, step=1)
+
+countries_bar_f = ["United States of America", "Australia", "United Kingdom of Great Britain and Northern Ireland", "India", "South Africa", "Russian Federation", "Costa Rica", "Brazil"]
+countries_options_bar_f = st.multiselect(
+    "B) Choose countries to view:",
+    df_bar_f['country'].unique().tolist(),
+    countries_bar_f
+)
+bar_data_f = df_bar_f[df_bar_f["country"].isin(countries_options_bar_f)]
+bar_data_f = bar_data_f[['country', 'year', "exp_cpp_dstb", "exp_cpp_mdr"]]
+bar_data_f = bar_data_f.query('year == @year_bar_f')
+bar_data_f.columns = ['country', 'year', 'First-Line', 'Second-Line']
+bar_data_f = pd.melt(bar_data_f, id_vars=['country', 'year'], value_name="Treatment Cost", var_name="Type")
+
+barplot = alt.Chart(bar_data_f).mark_bar().encode(
+    x=alt.X('country:N'),
+    y=alt.Y("Treatment Cost:Q"),
+    color=alt.Color('Type:N'),
+    tooltip=['Treatment Cost:Q']
+)
+
+st.altair_chart(barplot, use_container_width=True)
