@@ -64,8 +64,7 @@ scatterplot = alt.Chart(subset).mark_point().encode(
         labelLimit=0
 )
 
-scatterplot + scatterplot.transform_regression(alt.X(x_option, title=x_option, scale=alt.Scale(type='sqrt')), 
-                                               alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}"))).mark_line()
+scatterplot + scatterplot.transform_regression(x_option, y_option).mark_line()
 
 st.altair_chart(scatterplot, use_container_width=True)
 
