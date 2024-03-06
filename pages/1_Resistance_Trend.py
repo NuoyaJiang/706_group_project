@@ -361,7 +361,7 @@ chart_trend_incident_resis = alt.Chart(subset).mark_line(point=True).encode(
 chart_all = chart_trend_incident
 
 
-st.altair_chart(chart_all, use_container_width=True)
+st.altair_chart(chart_trend_incident, use_container_width=True)
 
 
 countries_in_subset = df3["country"].unique()
