@@ -55,8 +55,8 @@ corrplot = alt.Chart(corr_mat).mark_bar().encode(
 
 st.altair_chart(corrplot, use_container_width=True)
 
-x_option = st.selectbox('Select Expenditure', subset.columns[2:], index=0)
-y_option = st.selectbox('Select Burden', subset.columns[0:2], index=0)
+x_option = st.selectbox('Select Burden', subset.columns[0:2], index=0)
+y_option = st.selectbox('Select Expenditure', subset.columns[2:], index=0)
 
 scatterplot = alt.Chart(subset).mark_point().encode(
     y=alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}")),
