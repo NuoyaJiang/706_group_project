@@ -56,18 +56,16 @@ st.altair_chart(corrplot, use_container_width=True)
 x_option = st.selectbox('Select X dimension', subset.columns[6:])
 y_option = st.selectbox('Select Y dimension', subset.columns[0:6])
 
-y = alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}"))
-x = alt.X(x_option, title=x_option, scale=alt.Scale(type='sqrt'))
-
 scatterplot = alt.Chart(subset).mark_point().encode(
-    y=y,
-    x=x,
+    y=alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}")),
+    x=alt.X(x_option, title=x_option, scale=alt.Scale(type='sqrt')),
 ).configure_axis(
         titleFontSize=14,
         labelLimit=0
 )
 
-scatterplot + scatterplot.transform_regression(x, y).mark_line()
+scatterplot + scatterplot.transform_regression(x = alt.X(x_option, title=x_option, scale=alt.Scale(type='sqrt')), 
+                                               y = alt.Y(y_option, title=y_option, scale=alt.Scale(type=f"{'symlog' if y_option in subset.columns[4:6] else 'linear'}"))).mark_line()
 
 st.altair_chart(scatterplot, use_container_width=True)
 
