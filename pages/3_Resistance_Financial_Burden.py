@@ -34,8 +34,8 @@ subset.columns = ['Percent of New Resistant Cases',
 
 # subset.iloc[:, 4:] = subset.iloc[:, 4:].apply(np.sqrt)
 
-y_options = st.multiselect('Select Expenditure', options=subset.columns[4:], default=subset.columns[6:].tolist())
-x_options = st.multiselect('Select Burden', options=subset.columns[0:4], default=subset.columns[0:6].tolist())
+y_options = st.multiselect('Select Expenditure', options=subset.columns[4:], default=subset.columns[4:].tolist())
+x_options = st.multiselect('Select Burden', options=subset.columns[0:4], default=subset.columns[0:4].tolist())
 
 corr_mat = subset.corr().loc[x_options,y_options]
 
