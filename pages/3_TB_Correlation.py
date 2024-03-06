@@ -34,8 +34,8 @@ subset.columns = ['Percent of New Resistant Cases',
 
 # subset.iloc[:, 4:] = subset.iloc[:, 4:].apply(np.sqrt)
 
-x_options = st.multiselect('Select X dimension', options=subset.columns[6:], default=subset.columns[6:])
-y_options = st.multiselect('Select Y dimension', options=subset.columns[0:6], default=subset.columns[0:6])
+x_options = st.multiselect('Select X dimension', options=subset.columns[6:], default=subset.columns[6:].tolist())
+y_options = st.multiselect('Select Y dimension', options=subset.columns[0:6], default=subset.columns[0:6].tolist())
 
 corr_mat = subset.corr().loc[x_options,y_options]
 
